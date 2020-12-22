@@ -12,6 +12,7 @@ const options = {
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
     }),
   ],
+  database: process.env.DB_URI,
 };
 
 export default (req, res) => NextAuth(req, res, options);
