@@ -21,7 +21,7 @@ export default function Home() {
       {session && (
       <>
         <div>Signed in as {session.user.email}</div> <br />
-        <button type onClick={signOut}>Sign out</button>
+        <button type="button" onClick={() => { signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}` }); }}>Sign out</button>
       </>
       )}
     </>

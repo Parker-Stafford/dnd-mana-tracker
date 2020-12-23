@@ -4,7 +4,7 @@ import Providers from 'next-auth/providers';
 const options = {
   pages: {
     signIn: '/auth/signin',
-    signOut: '/auth/signout',
+    error: '/auth/error',
   },
   providers: [
     Providers.Google({
@@ -16,13 +16,7 @@ const options = {
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
     }),
   ],
-  callbacks: {
-    redirect: async (url, baseUrl) => {
-      console.log(url, baseUrl);
-      return Promise.resolve(baseUrl);
-    },
-  },
-  // database: process.env.DB_URI,
+  database: process.env.DB_URI,
 };
 
 export default (req, res) => NextAuth(req, res, options);
