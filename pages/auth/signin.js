@@ -2,7 +2,6 @@ import React from 'react';
 import { providers, signIn } from 'next-auth/client';
 
 export default function SignIn({ provs }) {
-  console.log(process.env.NEXTAUTH_URL);
   return (
     <>
       {Object.values(provs).map((provider) => (

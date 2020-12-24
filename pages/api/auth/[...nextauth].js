@@ -16,6 +16,13 @@ const options = {
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
     }),
   ],
+  callbacks: {
+    session: async (session, user) => {
+      const newSession = session;
+      newSession.user.id = user.id;
+      return Promise.resolve(newSession);
+    },
+  },
   database: process.env.DB_URI,
 };
 
