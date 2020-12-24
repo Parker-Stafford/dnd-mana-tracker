@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URI")
+}
+
+model accounts {
+  id                   Int       @id @default(autoincrement())
+  compound_id          String    @unique
+  user_id              Int
+  provider_type        String
+  provider_id          String
+  provider_account_id  String
+  refresh_token        String?
+  access_token         String?
+  access_token_expires DateTime?
+  created_at           DateTime  @default(now())
+  updated_at           DateTime  @default(now())
+  users                users     @relation(fields: [user_id], references: [id])
+
+  @@index([provider_account_id], name: "provider_account_id_idx")
+  @@index([provider_id], name: "provider_id_idx")
+  @@index([user_id], name: "user_id_idx")
+}
+
+model characters {
+  id           Int       @id @default(autoincrement())
+  name         String?
+  current_mana Int?
+  max_mana     Int
+  photo_url    String?
+  level        Int?
+  user_id      Int
+  users        users     @relation(fields: [user_id], references: [id])
+  potions      potions[]
+}
+
+model potions {
+  id           Int         @id @default(autoincrement())
+  name         String?
+  effect       String?
+  restore      Int?
+  level_req    Int?
+  character_id Int?
+  quantity     Int?
+  characters   characters? @relation(fields: [character_id], references: [id])
+
+  @@index([character_id], name: "char_id_potion_idx")
+}
+
+model sessions {
+  id            Int      @id @default(autoincrement())
+  user_id       Int
+  expires       DateTime
+  session_token String   @unique
+  access_token  String   @unique
+  created_at    DateTime @default(now())
+  updated_at    DateTime @default(now())
+  users         users    @relation(fields: [user_id], references: [id])
+}
+
+model users {
+  id             Int          @id @default(autoincrement())
+  name           String?
+  email          String?      @unique
+  email_verified DateTime?
+  image          String?
+  created_at     DateTime     @default(now())
+  updated_at     DateTime     @default(now())
+  accounts       accounts[]
+  characters     characters[]
+  sessions       sessions[]
+
+  @@index([id], name: "user_id_char_idx")
+}
+
+model verification_requests {
+  id         Int      @id @default(autoincrement())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+}
