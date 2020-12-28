@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@apollo/client": "^3.3.6",
     "@prisma/client": "^2.13.1",
     "apollo-server-micro": "^2.19.1",
     "axios": "^0.21.1",
