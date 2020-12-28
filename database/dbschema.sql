@@ -87,6 +87,8 @@ CREATE TABLE potions
 CREATE INDEX char_id_potion_idx
   ON potions(character_id);
 
+  insert into characters(name,current_mana,max_mana,level,mana_pots,greater_pots,user_id) values ('parker',50,50,1,0,0,1);
+
   */
 
 ALTER TABLE accounts
