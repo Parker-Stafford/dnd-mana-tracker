@@ -52,11 +52,13 @@ CREATE TABLE verification_requests
 CREATE TABLE characters
   (
     id SERIAL,
-    name VARCHAR(255),
+    name VARCHAR(50),
     current_mana INTEGER,
     max_mana INTEGER NOT NULL,
     photo_url VARCHAR(255),
     level INTEGER,
+    mana_pots INTEGER,
+    greater_pots INTEGER,
     user_id INTEGER NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT fk_user
@@ -64,7 +66,8 @@ CREATE TABLE characters
         REFERENCES users(id)
         ON DELETE CASCADE
   );
-
+/* Potential option later */
+/*
 CREATE TABLE potions
   (
     id SERIAL,
@@ -80,6 +83,7 @@ CREATE TABLE potions
           REFERENCES characters(id)
           ON DELETE CASCADE
   );
+  */
 
 ALTER TABLE accounts
 ADD CONSTRAINT  fk_user
