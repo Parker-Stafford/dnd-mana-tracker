@@ -83,6 +83,10 @@ CREATE TABLE potions
           REFERENCES characters(id)
           ON DELETE CASCADE
   );
+
+CREATE INDEX char_id_potion_idx
+  ON potions(character_id);
+
   */
 
 ALTER TABLE accounts
@@ -97,8 +101,6 @@ FOREIGN KEY (user_id)
 REFERENCES users(id)
 ON DELETE CASCADE;
 
-CREATE INDEX char_id_potion_idx
-  ON potions(character_id);
 
 CREATE INDEX user_id_char_idx
   ON users(id);
