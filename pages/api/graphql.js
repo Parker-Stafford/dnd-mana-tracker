@@ -21,7 +21,7 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    characters: (_parent, args, _context) => (
+    characters: (_parent, args) => (
       prisma.characters.findMany({
         where: { user_id: +args.user_id },
         orderBy: { id: 'asc' },
@@ -33,6 +33,7 @@ const resolvers = {
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
+  tracing: process.env.DEVELOPEMENT,
 });
 
 export const config = {
