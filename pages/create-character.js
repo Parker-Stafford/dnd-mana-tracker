@@ -6,6 +6,7 @@ import { signOut, useSession } from 'next-auth/client';
 import { useMutation } from '@apollo/client';
 import SignIn from '../components/SignIn';
 import { CREATE_CHARACTER } from '../apollo/queries';
+import Character from '../components/Character';
 
 export default function CreateCharacter() {
   const [session, loading] = useSession();
@@ -15,7 +16,7 @@ export default function CreateCharacter() {
     {
       name: '',
       maxMana: 0,
-      currentMana: 0,
+      currentMana: null,
       photoUrl: null,
       level: 1,
       manaPots: 0,
@@ -27,14 +28,19 @@ export default function CreateCharacter() {
     const { id, value, type } = event.target;
     if (type === 'number') {
       setFormValues({ [id]: +value });
+      console.log(formValues);
       return;
     }
     setFormValues({ [id]: value });
+    console.log(formValues);
   }
 
   async function createCharacter(event) {
     event.preventDefault();
     const insert = formValues;
+    if (insert.currentMana > insert.maxMana || insert.currentMana === null) {
+      insert.currentMana = insert.maxMana;
+    }
     insert.user_id = session.user.id;
     createChar({ variables: insert });
   }
@@ -62,7 +68,7 @@ export default function CreateCharacter() {
             </label>
             <label htmlFor="currentMana">
               Current mana:
-              <input id="currentMana" type="number" defaultValue="0" min="0" />
+              <input id="currentMana" type="number" min="0" max={formValues.maxMana} />
               (defaults to Max mana)
             </label>
             <label htmlFor="photoUrl">
@@ -88,14 +94,25 @@ export default function CreateCharacter() {
             <button type="submit">Create!</button>
           </form>
           <button type="button" onClick={() => { signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}` }); }}>Sign out</button>
+          <Link href="/characters"><button type="button">Characters</button></Link>
+          <Link href="/"><button type="button">Home</button></Link>
           {error && (
             <div>
+              {JSON.stringify(error)}
               There was an error creating your character. Please check your inputs and try again!
             </div>
           )}
           {data && (
             <div>
-              {JSON.stringify(data.createCharacter)}
+              Character created, click to go to character page!
+              <Character
+                name={data.createCharacter.name}
+                photoUrl={data.createCharacter.photo_url}
+                level={data.createCharacter.level}
+                currentMana={data.createCharacter.current_mana}
+                maxMana={data.createCharacter.max_mana}
+                id={data.createCharacter.id}
+              />
             </div>
           )}
         </>
