@@ -5,11 +5,11 @@ import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/client';
 import { useMutation } from '@apollo/client';
 import SignIn from '../components/SignIn';
-import { CREATE_CHARACTER } from '../gqlClient/queries';
+import { CREATE_CHARACTER } from '../apollo/queries';
 
 export default function CreateCharacter() {
   const [session, loading] = useSession();
-  const [createChar, { data }] = useMutation(CREATE_CHARACTER);
+  const [createChar, { data, error }] = useMutation(CREATE_CHARACTER);
   const [formValues, setFormValues] = useReducer(
     (curVals, newVals) => ({ ...curVals, ...newVals }),
     {
@@ -24,17 +24,20 @@ export default function CreateCharacter() {
   );
 
   function handleFormChange(event) {
-    const { id, value } = event.target;
+    const { id, value, type } = event.target;
+    if (type === 'number') {
+      setFormValues({ [id]: +value });
+      return;
+    }
     setFormValues({ [id]: value });
   }
 
-  function createCharacter(event) {
+  async function createCharacter(event) {
     event.preventDefault();
     const insert = formValues;
     insert.user_id = session.user.id;
     createChar({ variables: insert });
   }
-
   return (
     <>
       <Head>
@@ -85,6 +88,16 @@ export default function CreateCharacter() {
             <button type="submit">Create!</button>
           </form>
           <button type="button" onClick={() => { signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}` }); }}>Sign out</button>
+          {error && (
+            <div>
+              There was an error creating your character. Please check your inputs and try again!
+            </div>
+          )}
+          {data && (
+            <div>
+              {JSON.stringify(data.createCharacter)}
+            </div>
+          )}
         </>
       )}
     </>
