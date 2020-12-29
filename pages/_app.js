@@ -2,9 +2,10 @@
 import '../styles/globals.css';
 import { Provider } from 'next-auth/client';
 import { ApolloProvider } from '@apollo/client';
-import client from '../gqlClient/config';
+import { useApollo } from '../apollo/config';
 
 function MyApp({ Component, pageProps }) {
+  const client = useApollo(pageProps.initialApolloState);
   return (
     <ApolloProvider client={client}>
       <Provider session={pageProps.session}>
