@@ -3,16 +3,19 @@ import Head from 'next/head';
 import React, { useReducer } from 'react';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/client';
+import { useMutation } from '@apollo/client';
 import SignIn from '../components/SignIn';
+import { CREATE_CHARACTER } from '../gqlClient/queries';
 
 export default function CreateCharacter() {
   const [session, loading] = useSession();
+  const [createChar, { data }] = useMutation(CREATE_CHARACTER);
   const [formValues, setFormValues] = useReducer(
     (curVals, newVals) => ({ ...curVals, ...newVals }),
     {
       name: '',
       maxMana: 0,
-      currentMana: null,
+      currentMana: 0,
       photoUrl: null,
       level: 1,
       manaPots: 0,
@@ -23,12 +26,13 @@ export default function CreateCharacter() {
   function handleFormChange(event) {
     const { id, value } = event.target;
     setFormValues({ [id]: value });
-    console.log(formValues);
   }
 
   function createCharacter(event) {
     event.preventDefault();
-
+    const insert = formValues;
+    insert.user_id = session.user.id;
+    createChar({ variables: insert });
   }
 
   return (
