@@ -2,10 +2,8 @@ import Head from 'next/head';
 // import styles from '../styles/Home.module.css';
 import React from 'react';
 import Link from 'next/link';
-import {
-  signOut, useSession, getSession,
-} from 'next-auth/client';
-import GET_CHARACTERS from '../gqlClient/queries';
+import { signOut, useSession, getSession } from 'next-auth/client';
+import { GET_CHARACTERS } from '../gqlClient/queries';
 import SignIn from '../components/SignIn';
 import Character from '../components/Character';
 
@@ -41,6 +39,7 @@ export default function Characters({ characters }) {
     </>
   );
 }
+
 // Get gql data
 export async function getServerSideProps(context) {
   const session = await getSession(context);
