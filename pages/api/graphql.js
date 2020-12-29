@@ -23,10 +23,10 @@ const typeDefs = gql`
   type Character {
     id: ID!
     name: String!
-    current_mana: Int!
+    current_mana: Int
     max_mana: Int!
     photo_url: String
-    level: Int!
+    level: Int
     mana_pots: Int
     greater_pots: Int
     user_id: Int!
