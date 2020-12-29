@@ -3,7 +3,8 @@ import Head from 'next/head';
 import React from 'react';
 import Link from 'next/link';
 import { signOut, useSession, getSession } from 'next-auth/client';
-import { GET_CHARACTERS } from '../gqlClient/queries';
+import { initializeApollo } from '../apollo/config';
+import { GET_CHARACTERS } from '../apollo/queries';
 import SignIn from '../components/SignIn';
 import Character from '../components/Character';
 
@@ -45,7 +46,9 @@ export async function getServerSideProps(context) {
   const session = await getSession(context);
   let characters = null;
   if (session) {
-    const result = await GET_CHARACTERS(session.user.id);
+    const client = initializeApollo();
+    const result = await GET_CHARACTERS(session.user.id, client);
+    // console.log(result);
     characters = result.data.characters;
   }
   return {
