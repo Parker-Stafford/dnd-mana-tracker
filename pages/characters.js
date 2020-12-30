@@ -10,6 +10,7 @@ import Char from '../components/Char';
 
 export default function Characters({ characters }) {
   const [session, loading] = useSession();
+
   return (
     <>
       <Head>
@@ -24,16 +25,15 @@ export default function Characters({ characters }) {
       {session && (
         <>
           {characters.map((character) => (
-            <Link href={`/character/${character.id}`} passHref>
-              <Char
-                key={character.id}
-                name={character.name}
-                photoUrl={character.photo_url}
-                level={character.level}
-                currentMana={character.current_mana}
-                maxMana={character.max_mana}
-              />
-            </Link>
+            <Char
+              key={character.id}
+              id={character.id}
+              name={character.name}
+              photoUrl={character.photo_url}
+              level={character.level}
+              currentMana={character.current_mana}
+              maxMana={character.max_mana}
+            />
           ))}
           <Link href="/"><button type="button">Home</button></Link>
           <Link href="/create-character"><button type="button">New Character</button></Link> <br />
