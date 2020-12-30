@@ -24,6 +24,10 @@ export const CREATE_CHARACTER = gql`
     createCharacter(name: $name, current_mana: $currentMana, max_mana: $maxMana, photo_url: $photoUrl, level: $level, mana_pots: $manaPots, greater_pots: $greaterPots, user_id: $user_id) {
       name
       id
+      photo_url
+      level
+      current_mana
+      max_mana
     }
   }
 `;

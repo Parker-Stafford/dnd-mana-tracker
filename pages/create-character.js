@@ -1,21 +1,23 @@
 import Head from 'next/head';
 // import styles from '../styles/Home.module.css';
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/client';
 import { useMutation } from '@apollo/client';
 import SignIn from '../components/SignIn';
-import { CREATE_CHARACTER } from '../gqlClient/queries';
+import { CREATE_CHARACTER } from '../apollo/queries';
+import Character from '../components/Character';
 
 export default function CreateCharacter() {
   const [session, loading] = useSession();
-  const [createChar, { data }] = useMutation(CREATE_CHARACTER);
+  const [urlWarn, setUrlWarn] = useState(false);
+  const [createChar, { data, error }] = useMutation(CREATE_CHARACTER);
   const [formValues, setFormValues] = useReducer(
     (curVals, newVals) => ({ ...curVals, ...newVals }),
     {
       name: '',
       maxMana: 0,
-      currentMana: 0,
+      currentMana: null,
       photoUrl: null,
       level: 1,
       manaPots: 0,
@@ -24,17 +26,38 @@ export default function CreateCharacter() {
   );
 
   function handleFormChange(event) {
-    const { id, value } = event.target;
+    const { id, value, type } = event.target;
+    if (type === 'number') {
+      setFormValues({ [id]: +value });
+      return;
+    }
+    if (id === 'photoUrl' && urlWarn) {
+      setUrlWarn(false);
+    }
     setFormValues({ [id]: value });
   }
 
-  function createCharacter(event) {
+  async function createCharacter(event) {
     event.preventDefault();
     const insert = formValues;
-    insert.user_id = session.user.id;
-    createChar({ variables: insert });
+    let fileType;
+    if (insert.photoUrl) {
+      fileType = insert.photoUrl.split('.');
+      fileType = fileType[fileType.length - 1];
+    }
+    if (!fileType || fileType.toLowerCase() === 'jpg' || fileType.toLowerCase() === 'png') {
+      if (insert.currentMana > insert.maxMana || insert.currentMana === null) {
+        insert.currentMana = insert.maxMana;
+      }
+      insert.user_id = session.user.id;
+      const result = await createChar({ variables: insert });
+      if (result) {
+        document.getElementById('char-create').reset();
+      }
+    } else {
+      setUrlWarn(true);
+    }
   }
-
   return (
     <>
       <Head>
@@ -48,7 +71,7 @@ export default function CreateCharacter() {
       )}
       {session && (
         <>
-          <form onSubmit={createCharacter} onChange={handleFormChange}>
+          <form id="char-create" onSubmit={createCharacter} onChange={handleFormChange}>
             <label htmlFor="name">
               Name:
               <input id="name" type="text" required />
@@ -59,13 +82,16 @@ export default function CreateCharacter() {
             </label>
             <label htmlFor="currentMana">
               Current mana:
-              <input id="currentMana" type="number" defaultValue="0" min="0" />
+              <input id="currentMana" type="number" min="0" max={formValues.maxMana} />
               (defaults to Max mana)
             </label>
             <label htmlFor="photoUrl">
               Photo url:
-              <input id="photoUrl" type="text" />
+              <input id="photoUrl" type="text" placeholder="https://mana.com/images.jpg" />
               (must be an image url of type .jpg or .png)
+              {urlWarn && (
+                <div>Incorrect url type. Please find a different url or leave blank.</div>
+              )}
             </label>
             <label htmlFor="level">
               Level:
@@ -85,6 +111,27 @@ export default function CreateCharacter() {
             <button type="submit">Create!</button>
           </form>
           <button type="button" onClick={() => { signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}` }); }}>Sign out</button>
+          <Link href="/characters"><button type="button">Characters</button></Link>
+          <Link href="/"><button type="button">Home</button></Link>
+          {error && (
+            <div>
+              {JSON.stringify(error)}
+              There was an error creating your character. Please check your inputs and try again!
+            </div>
+          )}
+          {data && (
+            <div>
+              Character created, click to go to character page!
+              <Character
+                name={data.createCharacter.name}
+                photoUrl={data.createCharacter.photo_url}
+                level={data.createCharacter.level}
+                currentMana={data.createCharacter.current_mana}
+                maxMana={data.createCharacter.max_mana}
+                id={data.createCharacter.id}
+              />
+            </div>
+          )}
         </>
       )}
     </>
