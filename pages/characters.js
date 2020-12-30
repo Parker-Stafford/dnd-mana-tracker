@@ -24,7 +24,7 @@ export default function Characters({ characters }) {
       {session && (
         <>
           {characters.map((character) => (
-            <Link href={`/character/${character.id}`} passHref>
+            <Link key={character.id} href={`/character/${character.id}`} passHref>
               <Char
                 key={character.id}
                 name={character.name}
