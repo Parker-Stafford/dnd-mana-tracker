@@ -34,6 +34,7 @@ export default function Characters({ characters }) {
             />
           ))}
           <Link href="/"><button type="button">Home</button></Link>
+          <Link href="/create-character"><button type="button">New Character</button></Link> <br />
           <button type="button" onClick={() => { signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}` }); }}>Sign out</button>
         </>
       )}
