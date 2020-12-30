@@ -5,13 +5,13 @@ import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/client';
 import { useMutation } from '@apollo/client';
 import SignIn from '../components/SignIn';
-import { CREATE_CHARACTER } from '../apollo/queries';
+import { UPSERT_CHARACTER } from '../apollo/queries';
 import Char from '../components/Char';
 
 export default function CreateCharacter() {
   const [session, loading] = useSession();
   const [urlWarn, setUrlWarn] = useState(false);
-  const [createChar, { data, error }] = useMutation(CREATE_CHARACTER);
+  const [createChar, { data, error }] = useMutation(UPSERT_CHARACTER);
   const [formValues, setFormValues] = useReducer(
     (curVals, newVals) => ({ ...curVals, ...newVals }),
     {
@@ -122,14 +122,14 @@ export default function CreateCharacter() {
           {data && (
             <div>
               Character created, click to go to character page!
-              <Link href={`/character/${data.createCharacter.id}`} passHref>
+              <Link href={`/character/${data.upsertCharacter.id}`} passHref>
                 <Char
-                  name={data.createCharacter.name}
-                  photoUrl={data.createCharacter.photo_url}
-                  level={data.createCharacter.level}
-                  currentMana={data.createCharacter.current_mana}
-                  maxMana={data.createCharacter.max_mana}
-                  id={data.createCharacter.id}
+                  name={data.upsertCharacter.name}
+                  photoUrl={data.upsertCharacter.photo_url}
+                  level={data.upsertCharacter.level}
+                  currentMana={data.upsertCharacter.current_mana}
+                  maxMana={data.upsertCharacter.max_mana}
+                  id={data.upsertCharacter.id}
                 />
               </Link>
             </div>
