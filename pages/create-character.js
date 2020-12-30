@@ -11,7 +11,7 @@ import Char from '../components/Char';
 export default function CreateCharacter() {
   const [session, loading] = useSession();
   const [urlWarn, setUrlWarn] = useState(false);
-  const [createChar, { data, error }] = useMutation(UPSERT_CHARACTER);
+  const [upsertChar, { data, error }] = useMutation(UPSERT_CHARACTER);
   const [formValues, setFormValues] = useReducer(
     (curVals, newVals) => ({ ...curVals, ...newVals }),
     {
@@ -50,7 +50,7 @@ export default function CreateCharacter() {
         insert.currentMana = insert.maxMana;
       }
       insert.user_id = session.user.id;
-      const result = await createChar({ variables: insert });
+      const result = await upsertChar({ variables: insert });
       if (result) {
         document.getElementById('char-create').reset();
       }

@@ -10,6 +10,7 @@ import Char from '../components/Char';
 
 export default function Characters({ characters }) {
   const [session, loading] = useSession();
+
   return (
     <>
       <Head>
@@ -27,6 +28,7 @@ export default function Characters({ characters }) {
             <Link key={character.id} href={`/character/${character.id}`} passHref>
               <Char
                 key={character.id}
+                id={character.id}
                 name={character.name}
                 photoUrl={character.photo_url}
                 level={character.level}
