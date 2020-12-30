@@ -1,6 +1,6 @@
 import Head from 'next/head';
 // import styles from '../styles/Home.module.css';
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/client';
 import { useMutation } from '@apollo/client';
@@ -10,6 +10,7 @@ import Character from '../components/Character';
 
 export default function CreateCharacter() {
   const [session, loading] = useSession();
+  const [urlWarn, setUrlWarn] = useState(false);
   const [createChar, { data, error }] = useMutation(CREATE_CHARACTER);
   const [formValues, setFormValues] = useReducer(
     (curVals, newVals) => ({ ...curVals, ...newVals }),
@@ -28,21 +29,34 @@ export default function CreateCharacter() {
     const { id, value, type } = event.target;
     if (type === 'number') {
       setFormValues({ [id]: +value });
-      console.log(formValues);
       return;
     }
+    if (id === 'photoUrl' && urlWarn) {
+      setUrlWarn(false);
+    }
     setFormValues({ [id]: value });
-    console.log(formValues);
   }
 
   async function createCharacter(event) {
     event.preventDefault();
     const insert = formValues;
-    if (insert.currentMana > insert.maxMana || insert.currentMana === null) {
-      insert.currentMana = insert.maxMana;
+    let fileType;
+    if (insert.photoUrl) {
+      fileType = insert.photoUrl.split('.');
+      fileType = fileType[fileType.length - 1];
     }
-    insert.user_id = session.user.id;
-    createChar({ variables: insert });
+    if (!fileType || fileType.toLowerCase() === 'jpg' || fileType.toLowerCase() === 'png') {
+      if (insert.currentMana > insert.maxMana || insert.currentMana === null) {
+        insert.currentMana = insert.maxMana;
+      }
+      insert.user_id = session.user.id;
+      const result = await createChar({ variables: insert });
+      if (result) {
+        document.getElementById('char-create').reset();
+      }
+    } else {
+      setUrlWarn(true);
+    }
   }
   return (
     <>
@@ -57,7 +71,7 @@ export default function CreateCharacter() {
       )}
       {session && (
         <>
-          <form onSubmit={createCharacter} onChange={handleFormChange}>
+          <form id="char-create" onSubmit={createCharacter} onChange={handleFormChange}>
             <label htmlFor="name">
               Name:
               <input id="name" type="text" required />
@@ -73,8 +87,11 @@ export default function CreateCharacter() {
             </label>
             <label htmlFor="photoUrl">
               Photo url:
-              <input id="photoUrl" type="text" />
+              <input id="photoUrl" type="text" placeholder="https://mana.com/images.jpg" />
               (must be an image url of type .jpg or .png)
+              {urlWarn && (
+                <div>Incorrect url type. Please find a different url or leave blank.</div>
+              )}
             </label>
             <label htmlFor="level">
               Level:
