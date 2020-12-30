@@ -1,12 +1,12 @@
+import React from 'react';
 import Head from 'next/head';
 // import styles from '../styles/Home.module.css';
-import React from 'react';
 import Link from 'next/link';
 import { signOut, useSession, getSession } from 'next-auth/client';
 import { initializeApollo } from '../apollo/config';
 import { GET_CHARACTERS } from '../apollo/queries';
 import SignIn from '../components/SignIn';
-import Character from '../components/Character';
+import Char from '../components/Char';
 
 export default function Characters({ characters }) {
   const [session, loading] = useSession();
@@ -24,14 +24,16 @@ export default function Characters({ characters }) {
       {session && (
         <>
           {characters.map((character) => (
-            <Character
-              key={character.id}
-              name={character.name}
-              photoUrl={character.photo_url}
-              level={character.level}
-              currentMana={character.current_mana}
-              maxMana={character.max_mana}
-            />
+            <Link href={`/character/${character.id}`} passHref>
+              <Char
+                key={character.id}
+                name={character.name}
+                photoUrl={character.photo_url}
+                level={character.level}
+                currentMana={character.current_mana}
+                maxMana={character.max_mana}
+              />
+            </Link>
           ))}
           <Link href="/"><button type="button">Home</button></Link>
           <Link href="/create-character"><button type="button">New Character</button></Link> <br />
@@ -49,7 +51,6 @@ export async function getServerSideProps(context) {
   if (session) {
     const client = initializeApollo();
     const result = await GET_CHARACTERS(session.user.id, client);
-    // console.log(result);
     characters = result.data.characters;
   }
   return {

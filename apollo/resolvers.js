@@ -8,6 +8,11 @@ const resolvers = {
         orderBy: { id: 'asc' },
       })
     ),
+    character: (_parent, args) => (
+      prisma.characters.findUnique({
+        where: { id: +args.id },
+      })
+    ),
   },
   Mutation: {
     createCharacter(_parent, data) {

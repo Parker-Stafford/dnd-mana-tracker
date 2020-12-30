@@ -6,7 +6,7 @@ import { signOut, useSession } from 'next-auth/client';
 import { useMutation } from '@apollo/client';
 import SignIn from '../components/SignIn';
 import { CREATE_CHARACTER } from '../apollo/queries';
-import Character from '../components/Character';
+import Char from '../components/Char';
 
 export default function CreateCharacter() {
   const [session, loading] = useSession();
@@ -122,14 +122,16 @@ export default function CreateCharacter() {
           {data && (
             <div>
               Character created, click to go to character page!
-              <Character
-                name={data.createCharacter.name}
-                photoUrl={data.createCharacter.photo_url}
-                level={data.createCharacter.level}
-                currentMana={data.createCharacter.current_mana}
-                maxMana={data.createCharacter.max_mana}
-                id={data.createCharacter.id}
-              />
+              <Link href={`/character/${data.createCharacter.id}`} passHref>
+                <Char
+                  name={data.createCharacter.name}
+                  photoUrl={data.createCharacter.photo_url}
+                  level={data.createCharacter.level}
+                  currentMana={data.createCharacter.current_mana}
+                  maxMana={data.createCharacter.max_mana}
+                  id={data.createCharacter.id}
+                />
+              </Link>
             </div>
           )}
         </>
