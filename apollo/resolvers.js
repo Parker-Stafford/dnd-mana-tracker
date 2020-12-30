@@ -15,21 +15,44 @@ const resolvers = {
     ),
   },
   Mutation: {
-    createCharacter(_parent, data) {
-      const id = data.user_id;
-      const char = { data: {} };
+    upsertCharacter(_parent, data) {
+      const userId = data.user_id;
+      const id = data.id || 0;
+      const char = {
+        where: { id },
+        update: {},
+        create: { users: { connect: { id: userId } } },
+      };
       const keys = Object.keys(data);
       for (let i = 0; i < keys.length; i++) {
-        if (keys[i] !== 'user_id') {
-          char.data[keys[i]] = data[keys[i]];
-        } else {
-          char.data.users = { connect: { id } };
+        if (keys[i] !== 'user_id' && keys[i] !== 'id') {
+          if (!data[keys[i]]) {
+            char.create[keys[i]] = data[keys[i]];
+          } else {
+            char.update[keys[i]] = data[keys[i]];
+            char.create[keys[i]] = data[keys[i]];
+          }
         }
       }
-      char.data.users.connect = { id };
-      return prisma.characters.create(char);
+      return prisma.characters.upsert(char);
     },
   },
 };
 
 export default resolvers;
+
+// createCharacter(_parent, data) {
+//   const id = data.user_id;
+//   const char = { data: {} };
+//   const keys = Object.keys(data);
+//   for (let i = 0; i < keys.length; i++) {
+//     if (keys[i] !== 'user_id') {
+//       if (!data[keys[i]])
+//       char.data[keys[i]] = data[keys[i]];
+//     } else {
+//       char.data.users = { connect: { id } };
+//     }
+//   }
+//   char.data.users.connect = { id };
+//   return prisma.characters.upsert(char);
+// }

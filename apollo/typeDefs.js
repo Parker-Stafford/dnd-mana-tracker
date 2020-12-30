@@ -8,7 +8,7 @@ const typeDefs = gql`
 
 
   type Mutation {
-    createCharacter(
+    upsertCharacter(
       name: String,
       current_mana: Int,
       max_mana: Int,
@@ -16,8 +16,9 @@ const typeDefs = gql`
       level: Int,
       mana_pots: Int,
       greater_pots: Int,
-      user_id: Int
-    ): Character
+      user_id: Int,
+      id: Int
+    ): Character!
   }
 
   type Character {
