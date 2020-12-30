@@ -1,11 +1,12 @@
 import React from 'react';
+import Link from 'next/link';
 import { useMutation } from '@apollo/client';
 import { CharImg } from '../styles/characters.styles.js';
 import { DELETE_CHARACTER } from '../apollo/queries';
 
-const Char = React.forwardRef(({
-  id, onClick, href, name, photoUrl, level, currentMana, maxMana,
-}, ref) => {
+export default function Char({
+  id, name, photoUrl, level, currentMana, maxMana,
+}) {
   const [deleteMutation, { data, error }] = useMutation(DELETE_CHARACTER);
   async function deleteChar() {
     const result = await deleteMutation({ variables: { id } });
@@ -14,25 +15,27 @@ const Char = React.forwardRef(({
   return (
     <>
       {!data && (
-        <a href={href} onClick={onClick} ref={ref}>
-          <div>
-            <div><CharImg src={photoUrl || 'https://i.imgur.com/VKYcZgy.png'} alt="Character" />{name}</div>
-            <div>Level: {level} Mana: {currentMana}/{maxMana}</div>
-            <button type="button" onClick={deleteChar}>Delete</button>
-          </div>
-          {error && (
-            <div>error deleting character</div>
-          )}
-        </a>
+        <>
+          <Link href={`/character/${id}`}>
+            <div>
+              <div>
+                <div><CharImg src={photoUrl || 'https://i.imgur.com/VKYcZgy.png'} alt="Character" />{name}</div>
+                <div>Level: {level} Mana: {currentMana}/{maxMana}</div>
+              </div>
+              {error && (
+                <div>error deleting character</div>
+              )}
+            </div>
+          </Link>
+          <button type="button" onClick={deleteChar}>Delete</button>
+        </>
       )}
       {data && (
-        <div>{data.character.name} deleted!</div>
+        <div>{data.deleteCharacter.name} deleted!</div>
       )}
       {error && (
         <div>error deleting character</div>
       )}
     </>
   );
-});
-
-export default Char;
+}

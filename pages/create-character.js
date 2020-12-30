@@ -122,16 +122,14 @@ export default function CreateCharacter() {
           {data && (
             <div>
               Character created, click to go to character page!
-              <Link href={`/character/${data.upsertCharacter.id}`} passHref>
-                <Char
-                  name={data.upsertCharacter.name}
-                  photoUrl={data.upsertCharacter.photo_url}
-                  level={data.upsertCharacter.level}
-                  currentMana={data.upsertCharacter.current_mana}
-                  maxMana={data.upsertCharacter.max_mana}
-                  id={data.upsertCharacter.id}
-                />
-              </Link>
+              <Char
+                name={data.upsertCharacter.name}
+                photoUrl={data.upsertCharacter.photo_url}
+                level={data.upsertCharacter.level}
+                currentMana={data.upsertCharacter.current_mana}
+                maxMana={data.upsertCharacter.max_mana}
+                id={data.upsertCharacter.id}
+              />
             </div>
           )}
         </>
