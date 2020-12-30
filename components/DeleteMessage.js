@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Delete({ error, data }) {
+export default function DeleteMessage({ error, data }) {
   return (
     <>
       {data && (
