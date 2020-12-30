@@ -1,10 +1,29 @@
 import { gql } from '@apollo/client';
 
-export function GET_CHARACTERS(id, client) {
+export function GET_CHARACTERS(userId, client) {
   return client.query({
     query: gql`
       query GetCharacters {
-        characters(user_id: ${id}) {
+        characters(user_id: ${userId}) {
+          id
+          name
+          current_mana
+          max_mana
+          photo_url
+          level
+          mana_pots
+          greater_pots
+        }
+      }
+    `,
+  });
+}
+
+export function GET_CHARACTER(id, client) {
+  return client.query({
+    query: gql`
+      query GetCharacter {
+        character(id: ${id}) {
           id
           name
           current_mana

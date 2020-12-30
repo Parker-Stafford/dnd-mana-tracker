@@ -3,7 +3,9 @@ import { gql } from '@apollo/client';
 const typeDefs = gql`
   type Query {
     characters(user_id: ID!): [Character!]
+    character(id: ID!): Character!
   }
+
 
   type Mutation {
     createCharacter(
