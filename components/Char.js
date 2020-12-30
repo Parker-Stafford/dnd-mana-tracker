@@ -3,15 +3,17 @@ import Link from 'next/link';
 import { useMutation } from '@apollo/client';
 import { CharImg } from '../styles/characters.styles.js';
 import { DELETE_CHARACTER } from '../apollo/queries';
+import Delete from './Delete';
 
 export default function Char({
   id, name, photoUrl, level, currentMana, maxMana,
 }) {
   const [deleteMutation, { data, error }] = useMutation(DELETE_CHARACTER);
+
   async function deleteChar() {
-    const result = await deleteMutation({ variables: { id } });
-    console.log(result);
+    await deleteMutation({ variables: { id } });
   }
+
   return (
     <>
       {!data && (
@@ -30,12 +32,7 @@ export default function Char({
           <button type="button" onClick={deleteChar}>Delete</button>
         </>
       )}
-      {data && (
-        <div>{data.deleteCharacter.name} deleted!</div>
-      )}
-      {error && (
-        <div>error deleting character</div>
-      )}
+      <Delete error={error} data={data} />
     </>
   );
 }
