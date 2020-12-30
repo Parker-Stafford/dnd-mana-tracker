@@ -52,11 +52,13 @@ CREATE TABLE verification_requests
 CREATE TABLE characters
   (
     id SERIAL,
-    name VARCHAR(255),
+    name VARCHAR(50),
     current_mana INTEGER,
     max_mana INTEGER NOT NULL,
     photo_url VARCHAR(255),
     level INTEGER,
+    mana_pots INTEGER,
+    greater_pots INTEGER,
     user_id INTEGER NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT fk_user
@@ -64,7 +66,8 @@ CREATE TABLE characters
         REFERENCES users(id)
         ON DELETE CASCADE
   );
-
+/* Potential option later */
+/*
 CREATE TABLE potions
   (
     id SERIAL,
@@ -81,6 +84,13 @@ CREATE TABLE potions
           ON DELETE CASCADE
   );
 
+CREATE INDEX char_id_potion_idx
+  ON potions(character_id);
+
+  insert into characters(name,current_mana,max_mana,level,mana_pots,greater_pots,user_id) values ('parker',50,50,1,0,0,1);
+
+  */
+
 ALTER TABLE accounts
 ADD CONSTRAINT  fk_user
 FOREIGN KEY (user_id)
@@ -93,8 +103,6 @@ FOREIGN KEY (user_id)
 REFERENCES users(id)
 ON DELETE CASCADE;
 
-CREATE INDEX char_id_potion_idx
-  ON potions(character_id);
 
 CREATE INDEX user_id_char_idx
   ON users(id);
