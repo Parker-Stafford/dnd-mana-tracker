@@ -39,14 +39,24 @@ export function GET_CHARACTER(id, client) {
 }
 
 export const UPSERT_CHARACTER = gql`
-  mutation UpsertCharacter($name: String!, $currentMana: Int!, $maxMana: Int!, $photoUrl: String, $level: Int!, $manaPots: Int!, $greaterPots: Int!, $user_id: Int!, $id: Int!) {
+  mutation UpsertCharacter($name: String!, $currentMana: Int!, $maxMana: Int!, $photoUrl: String, $level: Int!, $manaPots: Int!, $greaterPots: Int!, $user_id: Int!, $id: ID) {
     upsertCharacter(name: $name, current_mana: $currentMana, max_mana: $maxMana, photo_url: $photoUrl, level: $level, mana_pots: $manaPots, greater_pots: $greaterPots, user_id: $user_id, id: $id) {
-      name
       id
-      photo_url
-      level
+      name
       current_mana
       max_mana
+      photo_url
+      level
+      mana_pots
+      greater_pots
+    }
+  }
+`;
+
+export const DELETE_CHARACTER = gql`
+  mutation DeleteCharacter($id: ID!) {
+    deleteCharacter(id: $id) {
+      name
     }
   }
 `;

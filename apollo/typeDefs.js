@@ -17,8 +17,9 @@ const typeDefs = gql`
       mana_pots: Int,
       greater_pots: Int,
       user_id: Int,
-      id: Int
+      id: ID
     ): Character!
+    deleteCharacter(id: ID!): Character
   }
 
   type Character {
