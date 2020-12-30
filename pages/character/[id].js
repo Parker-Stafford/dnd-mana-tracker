@@ -4,21 +4,23 @@ import Link from 'next/link';
 import { signOut, useSession, getSession } from 'next-auth/client';
 import { useMutation } from '@apollo/client';
 import { initializeApollo } from '../../apollo/config';
-import { GET_CHARACTER, DELETE_CHARACTER } from '../../apollo/queries';
+import { GET_CHARACTER, DELETE_CHARACTER, UPSERT_CHARACTER } from '../../apollo/queries';
 import SignIn from '../../components/SignIn';
 import DeleteMessage from '../../components/DeleteMessage';
 import DeletePopup from '../../components/DeletePopup';
 import UpdatePopup from '../../components/UpdatePopup';
 import { CharImg } from '../../styles/characters.styles.js';
 
-export default function Character({ character }) {
+export default function Character({ initialCharacter }) {
   const [session, loading] = useSession();
+  const [char, setChar] = useState(initialCharacter);
   const [showDelete, setShowDelete] = useState(false);
   const [showUpdate, setShowUpdate] = useState(false);
-  const [deleteMutation, { data, error }] = useMutation(DELETE_CHARACTER);
+  const [deleteMutation, { data: deleteData, error: deleteError }] = useMutation(DELETE_CHARACTER);
+  const [upsertChar, { data: upsertData, error: upsertError }] = useMutation(UPSERT_CHARACTER);
 
   async function deleteChar() {
-    await deleteMutation({ variables: { id: character.id } });
+    await deleteMutation({ variables: { id: char.id } });
   }
 
   function openUpdate() {
@@ -37,10 +39,18 @@ export default function Character({ character }) {
     setShowDelete(false);
   }
 
+  async function updateChar(update) {
+    console.log('test');
+    const { data } = await upsertChar(update);
+    setChar(data.upsertCharacter);
+    console.log(upsertData);
+    closeUpdate();
+  }
+
   return (
     <>
       <Head>
-        <title>{character.name}</title>
+        <title>{char.name}</title>
       </Head>
       {loading && (
         <div>loading...</div>
@@ -48,39 +58,52 @@ export default function Character({ character }) {
       {!session && (
         <SignIn />
       )}
-      {session && !data && (
+      {session && (
         <>
-          <div>{character.name}</div>
-          <CharImg src={character.photo_url || 'https://i.imgur.com/VKYcZgy.png'} alt="Character" />
-          <div>{character.level}</div>
-          <div>Mana: {character.current_mana}/{character.max_mana}</div>
-          <div>Mana pots: {character.mana_pots}</div>
-          <div>Greater mana pots: {character.greater_pots}</div>
-          <button type="button" onClick={openDelete}>Delete</button>
-          <button type="button" onClick={openUpdate}>Edit</button>
-          <button type="button" onClick={() => { signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}` }); }}>Sign out</button>
+          {deleteData && (
+            <DeleteMessage data={deleteData} />
+          )}
+          {!deleteData && (
+            <>
+              <div>{char.name}</div>
+              <CharImg src={char.photo_url || 'https://i.imgur.com/VKYcZgy.png'} alt="Character" />
+              <div>{char.level}</div>
+              <div>Mana: {char.current_mana}/{char.max_mana}</div>
+              <div>Mana pots: {char.mana_pots}</div>
+              <div>Greater mana pots: {char.greater_pots}</div>
+              <button type="button" onClick={openDelete}>Delete</button>
+              <button type="button" onClick={openUpdate}>Edit</button>
+              <button type="button" onClick={() => { signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}` }); }}>Sign out</button>
+              {deleteError && (
+                <DeleteMessage error={deleteError} data={deleteData} />
+              )}
+              {upsertError && (
+                <>
+                  <div>Error updating {char.name} please try again!</div>
+                  {JSON.stringify(upsertError)}
+                </>
+              )}
+            </>
+          )}
+          <br />
+          <Link href="/"><button type="button">Home</button></Link>
+          <Link href="/create-character"><button type="button">New Character</button></Link>
+          <Link href="/characters"><button type="button">Characters</button></Link>
+          <DeletePopup
+            showing={showDelete}
+            name={char.name}
+            closeFunc={closeDelete}
+            deleteFunc={deleteChar}
+          />
+          <UpdatePopup
+            showing={showUpdate}
+            closeFunc={closeUpdate}
+            character={char}
+            updateFunc={updateChar}
+            userId={session.user.id}
+          />
         </>
       )}
-      {data && (
-        <>
-          <DeleteMessage error={error} data={data} />
-        </>
-      )}
-      <br />
-      <Link href="/"><button type="button">Home</button></Link>
-      <Link href="/create-character"><button type="button">New Character</button></Link>
-      <Link href="/characters"><button type="button">Characters</button></Link>
-      <DeletePopup
-        showing={showDelete}
-        name={character.name}
-        closeFunc={closeDelete}
-        deleteFunc={deleteChar}
-      />
-      <UpdatePopup
-        showing={showUpdate}
-        closeFunc={closeUpdate}
-        character={character}
-      />
     </>
   );
 }
@@ -88,14 +111,14 @@ export default function Character({ character }) {
 export async function getServerSideProps(context) {
   const session = await getSession(context);
   const { id } = context.query;
-  let character = null;
+  let initialCharacter = null;
   if (session) {
     const client = initializeApollo();
     const result = await GET_CHARACTER(id, client);
-    character = result.data.character;
+    initialCharacter = result.data.character;
   }
   return {
     props:
-    { character },
+    { initialCharacter },
   };
 }
