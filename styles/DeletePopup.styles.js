@@ -14,7 +14,7 @@ export const Popup = styled.div`
 position: fixed;
 top: 50%;
 left: 50%;
-z-index: 3;
+z-index: 5;
 width: 50%;
 background-color: white;
 transform: translate(-50%, -50%);
