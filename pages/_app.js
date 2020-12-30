@@ -10,6 +10,7 @@ function MyApp({ Component, pageProps }) {
     <ApolloProvider client={client}>
       <Provider session={pageProps.session}>
         <Component {...pageProps} />
+        <div id="portal" />
       </Provider>
     </ApolloProvider>
   );
