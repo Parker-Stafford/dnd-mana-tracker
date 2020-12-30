@@ -4,8 +4,9 @@ import React from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import {
-  signIn, signOut, useSession, getSession,
+  signOut, useSession, getSession,
 } from 'next-auth/client';
+import SignIn from '../components/SignIn';
 
 export default function Home({ result }) {
   const [session, loading] = useSession();
@@ -19,10 +20,7 @@ export default function Home({ result }) {
         <div>loading...</div>
       )}
       {!session && (
-      <>
-        <div>Not signed in</div> <br />
-        <button type="button" onClick={signIn}>Sign in</button>
-      </>
+        <SignIn />
       )}
       {session && (
       <>
