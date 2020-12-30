@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { signOut, useSession, getSession } from 'next-auth/client';
@@ -6,15 +6,27 @@ import { useMutation } from '@apollo/client';
 import { initializeApollo } from '../../apollo/config';
 import { GET_CHARACTER, DELETE_CHARACTER } from '../../apollo/queries';
 import SignIn from '../../components/SignIn';
-import Delete from '../../components/Delete';
+import DeleteMessage from '../../components/DeleteMessage';
 import { CharImg } from '../../styles/characters.styles.js';
+import DeletePopup from '../../components/DeletePopup';
 
 export default function Character({ character }) {
   const [session, loading] = useSession();
+  const [showing, setShowing] = useState(false);
   const [deleteMutation, { data, error }] = useMutation(DELETE_CHARACTER);
+
   async function deleteChar() {
     await deleteMutation({ variables: { id: character.id } });
   }
+
+  function openPopup() {
+    setShowing(true);
+  }
+
+  function closePopup() {
+    setShowing(false);
+  }
+
   return (
     <>
       <Head>
@@ -34,19 +46,25 @@ export default function Character({ character }) {
           <div>Mana: {character.current_mana}/{character.max_mana}</div>
           <div>Mana pots: {character.mana_pots}</div>
           <div>Greater mana pots: {character.greater_pots}</div>
-          <button type="button" onClick={deleteChar}>Delete</button>
+          <button type="button" onClick={openPopup}>Delete</button>
           <button type="button" onClick={() => { signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}` }); }}>Sign out</button>
         </>
       )}
-      {session && (
+      {data && (
         <>
-          <Delete error={error} data={data} />
+          <DeleteMessage error={error} data={data} />
         </>
       )}
       <br />
       <Link href="/"><button type="button">Home</button></Link>
       <Link href="/create-character"><button type="button">New Character</button></Link>
       <Link href="/characters"><button type="button">Characters</button></Link>
+      <DeletePopup
+        showing={showing}
+        name={character.name}
+        closeFunc={closePopup}
+        deleteFunc={deleteChar}
+      />
     </>
   );
 }
