@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 import client from './config';
 
-export default function GET_CHARACTERS(id) {
+export function GET_CHARACTERS(id) {
   return client.query({
     query: gql`
       query GetCharacters {
@@ -19,3 +19,12 @@ export default function GET_CHARACTERS(id) {
     `,
   });
 }
+
+export const CREATE_CHARACTER = gql`
+  mutation CreateCharacter($name: String!, $currentMana: Int!, $maxMana: Int!, $photoUrl: String, $level: Int!, $manaPots: Int!, $greaterPots: Int!, $user_id: Int!) {
+    createCharacter(name: $name, current_mana: $currentMana, max_mana: $maxMana, photo_url: $photoUrl, level: $level, mana_pots: $manaPots, greater_pots: $greaterPots, user_id: $user_id) {
+      name
+      id
+    }
+  }
+`;
