@@ -67,11 +67,11 @@ export default function CreateCharForm({
     <>
       <form id="char-create" onSubmit={createCharacter} onChange={handleFormChange}>
         <label htmlFor="name">
-          Name:
+          Name <span>*</span>:
           <input id="name" type="text" defaultValue={name || null} required />
         </label>
         <label htmlFor="maxMana">
-          Max mana:
+          Max mana <span>*</span>:
           <input id="maxMana" type="number" min="0" defaultValue={maxMana || '0'} required />
         </label>
         <label htmlFor="currentMana">
@@ -88,7 +88,7 @@ export default function CreateCharForm({
           )}
         </label>
         <label htmlFor="level">
-          Level:
+          Level <span>*</span>:
           <input id="level" type="number" min="1" defaultValue={level || '1'} />
           {creating ? '(defaults to 1)' : null}
         </label>
