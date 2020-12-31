@@ -10,6 +10,7 @@ import DeleteMessage from '../../components/DeleteMessage';
 import DeletePopup from '../../components/DeletePopup';
 import UpdatePopup from '../../components/UpdatePopup';
 import SpellPopup from '../../components/SpellPopup';
+import ManaChanger from '../../components/ManaChanger';
 import { CharImg } from '../../styles/characters.styles.js';
 
 export default function Character({ initialCharacter, userId }) {
@@ -76,15 +77,19 @@ export default function Character({ initialCharacter, userId }) {
     setChar(data.upsertCharacter);
   }
 
-  async function castSpell(cost) {
+  async function castSpell(cost, gain = false) {
     const update = {
       variables: {
         id: char.id,
         user_id: userId,
         maxMana: char.max_mana,
-        currentMana: char.current_mana - cost,
       },
     };
+    if (gain) {
+      update.variables.currentMana = char.current_mana + cost;
+    } else {
+      update.variables.currentMana = char.current_mana - cost;
+    }
     const { data } = await upsertChar(update);
     setChar(data.upsertCharacter);
   }
@@ -110,7 +115,10 @@ export default function Character({ initialCharacter, userId }) {
               <div>{char.name}</div>
               <CharImg src={char.photo_url || 'https://i.imgur.com/VKYcZgy.png'} alt="Character" />
               <div>{char.level}</div>
-              <div>Mana: {char.current_mana}/{char.max_mana}</div>
+              <div>
+                Mana: {char.current_mana}/{char.max_mana}
+                <ManaChanger manaFunc={castSpell} />
+              </div>
               <button id="manaPots" type="button" disabled={!char.mana_pots} onClick={drinkPotion}>Drink mana potion {char.mana_pots}</button>
               <button id="greaterPots" type="button" disabled={!char.greater_pots} onClick={drinkPotion}>Drink greater mana potion {char.greater_pots}</button><br />
               <button id="shortRest" type="button" onClick={takeRest}>Short rest</button>
