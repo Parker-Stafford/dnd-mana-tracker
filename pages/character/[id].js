@@ -46,7 +46,16 @@ export default function Character({ initialCharacter, userId }) {
 
   async function drinkPotion(event) {
     const potionType = event.target.id;
-    const update = { variables: { id: char.id, user_id: userId, maxMana: char.max_mana } };
+    const update = {
+      variables:
+      {
+        id: char.id,
+        user_id: userId,
+        maxMana: char.max_mana,
+        name: char.name,
+        level: char.level,
+      },
+    };
     if (potionType === 'manaPots') {
       update.variables[potionType] = char.mana_pots - 1;
       update.variables.currentMana = Math.min(char.current_mana + 10, char.max_mana);
@@ -60,7 +69,16 @@ export default function Character({ initialCharacter, userId }) {
 
   async function takeRest(event) {
     const restType = event.target.id;
-    const update = { variables: { id: char.id, user_id: userId, maxMana: char.max_mana } };
+    const update = {
+      variables:
+      {
+        id: char.id,
+        user_id: userId,
+        maxMana: char.max_mana,
+        name: char.name,
+        level: char.level,
+      },
+    };
     if (restType === 'shortRest') {
       update.variables.currentMana = Math.min(char.current_mana + 10, char.max_mana);
     } else {
@@ -76,6 +94,8 @@ export default function Character({ initialCharacter, userId }) {
         id: char.id,
         user_id: userId,
         maxMana: char.max_mana,
+        name: char.name,
+        level: char.level,
       },
     };
     if (gain) {
@@ -93,6 +113,8 @@ export default function Character({ initialCharacter, userId }) {
         id: char.id,
         user_id: userId,
         maxMana: char.max_mana,
+        name: char.name,
+        level: char.level,
       },
     };
     const potType = event.target.id;
@@ -111,6 +133,7 @@ export default function Character({ initialCharacter, userId }) {
         id: char.id,
         user_id: userId,
         maxMana: char.max_mana,
+        name: char.name,
         level: char.level + 1,
       },
     };
