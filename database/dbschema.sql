@@ -52,11 +52,11 @@ CREATE TABLE verification_requests
 CREATE TABLE characters
   (
     id SERIAL,
-    name VARCHAR(50),
+    name VARCHAR(50) NOT NULL,
     current_mana INTEGER,
     max_mana INTEGER NOT NULL,
     photo_url VARCHAR(255),
-    level INTEGER,
+    level INTEGER NOT NULL,
     mana_pots INTEGER,
     greater_pots INTEGER,
     user_id INTEGER NOT NULL,

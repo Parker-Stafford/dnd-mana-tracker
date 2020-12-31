@@ -27,28 +27,16 @@ model accounts {
 }
 
 model characters {
-  id           Int       @id @default(autoincrement())
-  name         String?
+  id           Int     @id @default(autoincrement())
+  name         String
   current_mana Int?
   max_mana     Int
   photo_url    String?
-  level        Int?
+  level        Int
+  mana_pots    Int?
+  greater_pots Int?
   user_id      Int
-  users        users     @relation(fields: [user_id], references: [id])
-  potions      potions[]
-}
-
-model potions {
-  id           Int         @id @default(autoincrement())
-  name         String?
-  effect       String?
-  restore      Int?
-  level_req    Int?
-  character_id Int?
-  quantity     Int?
-  characters   characters? @relation(fields: [character_id], references: [id])
-
-  @@index([character_id], name: "char_id_potion_idx")
+  users        users   @relation(fields: [user_id], references: [id])
 }
 
 model sessions {
