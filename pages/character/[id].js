@@ -105,6 +105,19 @@ export default function Character({ initialCharacter, userId }) {
     setChar(data.upsertCharacter);
   }
 
+  async function levelUp() {
+    const update = {
+      variables: {
+        id: char.id,
+        user_id: userId,
+        maxMana: char.max_mana,
+        level: char.level + 1,
+      },
+    };
+    const { data } = await upsertChar(update);
+    setChar(data.upsertCharacter);
+  }
+
   return (
     <>
       <Head>
@@ -125,20 +138,22 @@ export default function Character({ initialCharacter, userId }) {
             <>
               <div>{char.name}</div>
               <CharImg src={char.photo_url || 'https://i.imgur.com/VKYcZgy.png'} alt="Character" />
-              <div>{char.level}</div>
+              <div>
+                Level: {char.level} <button type="button" onClick={levelUp}>Level up!</button>
+              </div>
               <div>
                 Mana: {char.current_mana}/{char.max_mana}
                 <ManaChanger manaFunc={castSpell} />
               </div>
               <br />
-              <button id="manaPots" type="button" disabled={!char.mana_pots} onClick={drinkPotion}>Drink mana potion {char.mana_pots}</button> <button id="addMPot" type="button" onClick={addPotion}>Add mana pot +</button>
+              <button id="manaPots" type="button" disabled={!char.mana_pots} onClick={drinkPotion}>Drink mana potion {char.mana_pots}</button>
+              <button id="addMPot" type="button" onClick={addPotion}>Add mana pot +</button>
               <button id="greaterPots" type="button" disabled={!char.greater_pots} onClick={drinkPotion}>Drink greater mana potion {char.greater_pots}</button>
               <button id="addGPot" type="button" onClick={addPotion}>Add greater mana pot +</button>
               <br /><br />
               <button id="shortRest" type="button" onClick={takeRest}>Short rest</button>
               <button id="longRest" type="button" onClick={takeRest}>Long rest</button>
               <SpellCaster castFunc={castSpell} />
-              {/* <button id="castSpell" type="button" onClick={openSpell}>Cast spell!</button> */}
               <br />
               <button type="button" onClick={openDelete}>Delete</button>
               <button type="button" onClick={openUpdate}>Edit</button>
