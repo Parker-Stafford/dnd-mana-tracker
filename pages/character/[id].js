@@ -9,7 +9,7 @@ import SignIn from '../../components/SignIn';
 import DeleteMessage from '../../components/DeleteMessage';
 import DeletePopup from '../../components/DeletePopup';
 import UpdatePopup from '../../components/UpdatePopup';
-import SpellPopup from '../../components/SpellPopup';
+import SpellCaster from '../../components/SpellCaster';
 import ManaChanger from '../../components/ManaChanger';
 import { CharImg } from '../../styles/characters.styles.js';
 
@@ -18,7 +18,6 @@ export default function Character({ initialCharacter, userId }) {
   const [char, setChar] = useState(initialCharacter);
   const [showDelete, setShowDelete] = useState(false);
   const [showUpdate, setShowUpdate] = useState(false);
-  const [showSpell, setShowSpell] = useState(false);
   const [deleteMutation, { data: deleteData, error: deleteError }] = useMutation(DELETE_CHARACTER);
   const [upsertChar, { error: upsertError }] = useMutation(UPSERT_CHARACTER);
 
@@ -37,12 +36,6 @@ export default function Character({ initialCharacter, userId }) {
   }
   function closeDelete() {
     setShowDelete(false);
-  }
-  function openSpell() {
-    setShowSpell(true);
-  }
-  function closeSpell() {
-    setShowSpell(false);
   }
 
   async function updateChar(update) {
@@ -86,10 +79,41 @@ export default function Character({ initialCharacter, userId }) {
       },
     };
     if (gain) {
-      update.variables.currentMana = char.current_mana + cost;
+      update.variables.currentMana = Math.min(char.max_mana, char.current_mana + cost);
     } else {
-      update.variables.currentMana = char.current_mana - cost;
+      update.variables.currentMana = Math.max(0, char.current_mana - cost);
     }
+    const { data } = await upsertChar(update);
+    setChar(data.upsertCharacter);
+  }
+
+  async function addPotion(event) {
+    const update = {
+      variables: {
+        id: char.id,
+        user_id: userId,
+        maxMana: char.max_mana,
+      },
+    };
+    const potType = event.target.id;
+    if (potType === 'addMPot') {
+      update.variables.manaPots = char.mana_pots + 1;
+    } else {
+      update.variables.greaterPots = char.greater_pots + 1;
+    }
+    const { data } = await upsertChar(update);
+    setChar(data.upsertCharacter);
+  }
+
+  async function levelUp() {
+    const update = {
+      variables: {
+        id: char.id,
+        user_id: userId,
+        maxMana: char.max_mana,
+        level: char.level + 1,
+      },
+    };
     const { data } = await upsertChar(update);
     setChar(data.upsertCharacter);
   }
@@ -114,16 +138,22 @@ export default function Character({ initialCharacter, userId }) {
             <>
               <div>{char.name}</div>
               <CharImg src={char.photo_url || 'https://i.imgur.com/VKYcZgy.png'} alt="Character" />
-              <div>{char.level}</div>
+              <div>
+                Level: {char.level} <button type="button" onClick={levelUp}>Level up!</button>
+              </div>
               <div>
                 Mana: {char.current_mana}/{char.max_mana}
                 <ManaChanger manaFunc={castSpell} />
               </div>
+              <br />
               <button id="manaPots" type="button" disabled={!char.mana_pots} onClick={drinkPotion}>Drink mana potion {char.mana_pots}</button>
-              <button id="greaterPots" type="button" disabled={!char.greater_pots} onClick={drinkPotion}>Drink greater mana potion {char.greater_pots}</button><br />
+              <button id="addMPot" type="button" onClick={addPotion}>Add mana pot +</button>
+              <button id="greaterPots" type="button" disabled={!char.greater_pots} onClick={drinkPotion}>Drink greater mana potion {char.greater_pots}</button>
+              <button id="addGPot" type="button" onClick={addPotion}>Add greater mana pot +</button>
+              <br /><br />
               <button id="shortRest" type="button" onClick={takeRest}>Short rest</button>
               <button id="longRest" type="button" onClick={takeRest}>Long rest</button>
-              <button id="castSpell" type="button" onClick={openSpell}>Cast spell!</button>
+              <SpellCaster castFunc={castSpell} />
               <br />
               <button type="button" onClick={openDelete}>Delete</button>
               <button type="button" onClick={openUpdate}>Edit</button>
@@ -155,11 +185,6 @@ export default function Character({ initialCharacter, userId }) {
             character={char}
             updateFunc={updateChar}
             userId={session.user.id}
-          />
-          <SpellPopup
-            showing={showSpell}
-            closeFunc={closeSpell}
-            castFunc={castSpell}
           />
         </>
       )}

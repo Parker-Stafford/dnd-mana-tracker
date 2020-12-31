@@ -28,7 +28,7 @@ export default function ManaChanger({ manaFunc }) {
     <form id="manaForm">
       <button onClick={gainMana} type="button">Restore</button>
       <lable htmlFor="manaChanger">
-        <input onChange={manaChange} type="number" id="manaChanger" />
+        <input onChange={manaChange} type="number" id="manaChanger" min="0" />
       </lable>
       <button onClick={loseMana} type="button">Lose</button>
     </form>
