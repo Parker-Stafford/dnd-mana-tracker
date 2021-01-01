@@ -3,7 +3,7 @@ import Providers from 'next-auth/providers';
 
 const options = {
   pages: {
-    signIn: '/auth/signin',
+    signIn: '/auth/providers',
     error: '/auth/error',
   },
   providers: [
