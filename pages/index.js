@@ -1,9 +1,9 @@
 import Head from 'next/head';
-// import styles from '../styles/Home.module.css';
 import React from 'react';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/client';
-import SignIn from '../components/SignIn';
+import MainNoSession from '../components/MainNoSession';
+import { BodyStyle } from '../styles/index.styles';
 
 export default function Home() {
   const [session, loading] = useSession();
@@ -12,11 +12,12 @@ export default function Home() {
       <Head>
         <title>DnD Mana Tracker</title>
       </Head>
+      <BodyStyle session={session} />
       {loading && (
         <div>loading...</div>
       )}
       {!session && (
-        <SignIn />
+        <MainNoSession />
       )}
       {session && (
       <>
