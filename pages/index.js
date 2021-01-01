@@ -3,28 +3,28 @@ import React from 'react';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/client';
 import MainSignIn from '../components/MainSignIn';
+import NavBar from '../components/NavBar';
 import { BodyStyle } from '../styles/index.styles';
 
 export default function Home() {
   const [session, loading] = useSession();
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
       <Head>
         <title>DnD Mana Tracker</title>
       </Head>
       <BodyStyle session={session} />
-      {loading && (
-        <div>loading...</div>
-      )}
       {!session && (
         <MainSignIn />
       )}
       {session && (
       <>
-        <div>Signed in as {session.user.email}</div> <br />
+        <NavBar session={session} />
         <Link href="/characters"><button type="button">Characters</button></Link>
         <Link href="/create-character"><button type="button">New Character</button></Link> <br />
-        <button type="button" onClick={() => { signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}` }); }}>Sign out</button>
       </>
       )}
     </>
