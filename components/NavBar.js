@@ -3,12 +3,12 @@ import { signOut } from 'next-auth/client';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { BlueNavBar, WhiteDropDown, WhiteToggle } from '../styles/index.styles';
+import { BlueNavBar, WhiteDropDown, WhiteToggle, BrandFont } from '../styles/index.styles';
 
 export default function NavBar({ session }) {
   return (
     <BlueNavBar variant="dark">
-      <Navbar.Brand href="/"><i className="fas fa-flask" /> DnD Mana Tracker</Navbar.Brand>
+      <BrandFont href="/"><i className="fas fa-flask" /> DnD Mana Tracker</BrandFont>
       <Nav className="mr-auto">
         <Nav.Link href="/">
           Home

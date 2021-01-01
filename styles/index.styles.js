@@ -11,9 +11,13 @@ export const BodyStyle = createGlobalStyle`
 
 export const BlueNavBar = styled(Navbar)`
   background-color: #153e90 !important;
-  font-family: 'Righteous', cursive;
   color: white !important;
 `;
+
+export const BrandFont = styled(Navbar.Brand)`
+  font-family: 'Righteous', cursive;
+`;
+
 
 export const WhiteNavItem = styled(Nav.Link)`
   color: white !important;
