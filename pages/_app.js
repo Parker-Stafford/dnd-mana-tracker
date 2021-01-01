@@ -10,6 +10,7 @@ function MyApp({ Component, pageProps }) {
     <ApolloProvider client={client}>
       <Provider session={pageProps.session}>
         <Head>
+          <link rel="icon" href="/flask-solid.png" />
           <link
             rel="stylesheet"
             href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
@@ -17,7 +18,7 @@ function MyApp({ Component, pageProps }) {
             crossOrigin="anonymous"
           />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
-          <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet" />
+          <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
           <link
             rel="stylesheet"
             href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
