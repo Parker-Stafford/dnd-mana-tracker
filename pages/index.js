@@ -2,7 +2,7 @@ import Head from 'next/head';
 import React from 'react';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/client';
-import MainNoSession from '../components/MainNoSession';
+import MainSignIn from '../components/MainSignIn';
 import { BodyStyle } from '../styles/index.styles';
 
 export default function Home() {
@@ -17,7 +17,7 @@ export default function Home() {
         <div>loading...</div>
       )}
       {!session && (
-        <MainNoSession />
+        <MainSignIn />
       )}
       {session && (
       <>
