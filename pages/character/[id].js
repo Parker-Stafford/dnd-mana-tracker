@@ -11,7 +11,7 @@ import DeletePopup from '../../components/DeletePopup';
 import UpdatePopup from '../../components/UpdatePopup';
 import SpellCaster from '../../components/SpellCaster';
 import ManaChanger from '../../components/ManaChanger';
-import { CharImg } from '../../styles/characters.styles.js';
+import { CharImg } from '../../styles/characters.styles';
 
 export default function Character({ initialCharacter, userId }) {
   const [session, loading] = useSession();
@@ -155,42 +155,42 @@ export default function Character({ initialCharacter, userId }) {
       {session && (
         <>
           {deleteData && (
-            <DeleteMessage data={deleteData} />
+          <DeleteMessage data={deleteData} />
           )}
           {!deleteData && (
+          <>
+            <div>{char.name}</div>
+            <CharImg src={char.photo_url || 'https://i.imgur.com/29DHf92.png'} alt="Character" />
+            <div>
+              Level: {char.level} <button type="button" onClick={levelUp}>Level up!</button>
+            </div>
+            <div>
+              Mana: {char.current_mana}/{char.max_mana}
+              <ManaChanger manaFunc={castSpell} />
+            </div>
+            <br />
+            <button id="manaPots" type="button" disabled={!char.mana_pots} onClick={drinkPotion}>Drink mana potion {char.mana_pots}</button>
+            <button id="addMPot" type="button" onClick={addPotion}>Add mana pot +</button>
+            <button id="greaterPots" type="button" disabled={!char.greater_pots} onClick={drinkPotion}>Drink greater mana potion {char.greater_pots}</button>
+            <button id="addGPot" type="button" onClick={addPotion}>Add greater mana pot +</button>
+            <br /><br />
+            <button id="shortRest" type="button" onClick={takeRest}>Short rest</button>
+            <button id="longRest" type="button" onClick={takeRest}>Long rest</button>
+            <SpellCaster castFunc={castSpell} />
+            <br />
+            <button type="button" onClick={openDelete}>Delete</button>
+            <button type="button" onClick={openUpdate}>Edit</button>
+            <button type="button" onClick={() => { signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}` }); }}>Sign out</button>
+            {deleteError && (
+            <DeleteMessage error={deleteError} data={deleteData} />
+            )}
+            {upsertError && (
             <>
-              <div>{char.name}</div>
-              <CharImg src={char.photo_url || 'https://i.imgur.com/29DHf92.png'} alt="Character" />
-              <div>
-                Level: {char.level} <button type="button" onClick={levelUp}>Level up!</button>
-              </div>
-              <div>
-                Mana: {char.current_mana}/{char.max_mana}
-                <ManaChanger manaFunc={castSpell} />
-              </div>
-              <br />
-              <button id="manaPots" type="button" disabled={!char.mana_pots} onClick={drinkPotion}>Drink mana potion {char.mana_pots}</button>
-              <button id="addMPot" type="button" onClick={addPotion}>Add mana pot +</button>
-              <button id="greaterPots" type="button" disabled={!char.greater_pots} onClick={drinkPotion}>Drink greater mana potion {char.greater_pots}</button>
-              <button id="addGPot" type="button" onClick={addPotion}>Add greater mana pot +</button>
-              <br /><br />
-              <button id="shortRest" type="button" onClick={takeRest}>Short rest</button>
-              <button id="longRest" type="button" onClick={takeRest}>Long rest</button>
-              <SpellCaster castFunc={castSpell} />
-              <br />
-              <button type="button" onClick={openDelete}>Delete</button>
-              <button type="button" onClick={openUpdate}>Edit</button>
-              <button type="button" onClick={() => { signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}` }); }}>Sign out</button>
-              {deleteError && (
-                <DeleteMessage error={deleteError} data={deleteData} />
-              )}
-              {upsertError && (
-                <>
-                  <div>Error updating {char.name} please try again!</div>
-                  {JSON.stringify(upsertError)}
-                </>
-              )}
+              <div>Error updating {char.name} please try again!</div>
+              {JSON.stringify(upsertError)}
             </>
+            )}
+          </>
           )}
           <br />
           <Link href="/"><button type="button">Home</button></Link>
