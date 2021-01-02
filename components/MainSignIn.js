@@ -3,10 +3,10 @@ import { signIn } from 'next-auth/client';
 import {
   MainTitle,
   TitleDiv,
-  SignInButton,
   CallToSignIn,
   SignInWrapper,
 } from '../styles/MainSignIn.styles';
+import { WhiteButton } from '../styles/index.styles';
 
 export default function MainSignIn() {
   return (
@@ -16,7 +16,7 @@ export default function MainSignIn() {
       </TitleDiv>
       <SignInWrapper>
         <CallToSignIn>Click below to sign in or sign up!</CallToSignIn>
-        <SignInButton type="button" onClick={signIn}>Sign in</SignInButton>
+        <WhiteButton type="button" onClick={signIn}>Sign in</WhiteButton>
       </SignInWrapper>
     </>
   );
