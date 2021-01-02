@@ -26,17 +26,17 @@ export default function Home() {
       {session && (
       <>
         <NavBar session={session} />
-<ButtonWrapper>
-        <Container fluid>
-          <Row>
-            <Col xs={12} md={6}>
-              <Link href="/characters"><DashButton type="button">My Characters</DashButton></Link>
-            </Col>
-            <Col xs={12} md={6}>
-              <Link href="/create-character"><DashButton type="button">New Character <br /> +</DashButton></Link>
-            </Col>
-          </Row>
-        </Container>
+        <ButtonWrapper>
+          <Container fluid>
+            <Row>
+              <Col xs={12} md={6}>
+                <Link href="/characters"><DashButton type="button">My Characters</DashButton></Link>
+              </Col>
+              <Col xs={12} md={6}>
+                <Link href="/create-character"><DashButton type="button">New Character <br /> +</DashButton></Link>
+              </Col>
+            </Row>
+          </Container>
         </ButtonWrapper>
       </>
       )}
