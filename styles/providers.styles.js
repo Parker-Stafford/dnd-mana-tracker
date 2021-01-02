@@ -10,6 +10,7 @@ export const FBButton = styled(Button)`
   display: flex;
   justify-content: space-around;
   height: 46px;
+  width: 272.906px;
   align-items: center;
   &:focus {
     outline: -webkit-focus-ring-color auto 1px;
@@ -29,7 +30,7 @@ export const GButton = styled(Button)`
   background-color: white;
   padding-left: 0;
   color: rgba(0,0,0,.54);
-  width: 232.906px;
+  width: 272.906px;
   height: 46px;
   font-family: 'Roboto', sans-serif;
   font-weight: 500;
@@ -61,8 +62,8 @@ export const ProvidersWrapper = styled.div`
     position: fixed;
     top: 50%;
     left: 50%;
-    width: 300px;
-    height: 300px;
+    width: 400px;
+    height: 500px;
     border-radius: 20px;
     transform: translate(-50%, -50%);
     display: flex;
