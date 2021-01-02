@@ -1,10 +1,13 @@
 import Head from 'next/head';
 import React from 'react';
 import Link from 'next/link';
-import { signOut, useSession } from 'next-auth/client';
+import { useSession } from 'next-auth/client';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import MainSignIn from '../components/MainSignIn';
 import NavBar from '../components/NavBar';
-import { BodyStyle } from '../styles/index.styles';
+import { BodyStyle, DashButton, ButtonWrapper } from '../styles/index.styles';
 
 export default function Home() {
   const [session, loading] = useSession();
@@ -23,8 +26,18 @@ export default function Home() {
       {session && (
       <>
         <NavBar session={session} />
-        <Link href="/characters"><button type="button">Characters</button></Link>
-        <Link href="/create-character"><button type="button">New Character</button></Link> <br />
+<ButtonWrapper>
+        <Container fluid>
+          <Row>
+            <Col xs={12} md={6}>
+              <Link href="/characters"><DashButton type="button">My Characters</DashButton></Link>
+            </Col>
+            <Col xs={12} md={6}>
+              <Link href="/create-character"><DashButton type="button">New Character <br /> +</DashButton></Link>
+            </Col>
+          </Row>
+        </Container>
+        </ButtonWrapper>
       </>
       )}
     </>
