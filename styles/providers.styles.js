@@ -70,7 +70,7 @@ export const ProvidersWrapper = styled.div`
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    -moz-box-shadow: 0 0 3px #ccc;
-    -webkit-box-shadow: 0 0 3px #ccc;
+    -moz-box-shadow: 0 0 20px black;
+    -webkit-box-shadow: 0 0 20px black;
     box-shadow: 0 0 20px black;
 `;
