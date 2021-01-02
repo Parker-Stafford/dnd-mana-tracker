@@ -7,7 +7,7 @@ export const FormWrapper = styled(ProvidersWrapper)`
   color: white;
   width: 600px;
   padding: 20px 0;
-  top: 57%;
+  top: 55%;
 `;
 
 export const Title = styled.h2`

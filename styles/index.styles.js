@@ -42,7 +42,7 @@ export const BlueButton = styled(Button)`
   &:hover {
     background-color: white;
     color: #153e90;
-    border-color: white;
+    border-color: #153e90;
   }
   &:active {
     border-color: #153e90 !important;
