@@ -14,7 +14,7 @@ export default function NavBar({ session }) {
           Home
         </Nav.Link>
         <Nav.Link href="/characters">
-          Characters
+          My Characters
         </Nav.Link>
         <Nav.Link href="/create-character">
           New Character
