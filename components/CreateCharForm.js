@@ -1,7 +1,7 @@
 import React, { useReducer, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
-import { WhiteButton } from '../styles/index.styles';
+import { WhiteButton, BlueButton } from '../styles/index.styles';
 
 export default function CreateCharForm({
   upsertFunc,
@@ -120,7 +120,12 @@ export default function CreateCharForm({
           </Form.Label>
         </Form.Group>
         <Form.Group as={Col}>
-          <WhiteButton type="submit">{creating ? 'Create!' : 'Update!'}</WhiteButton>
+          {creating && (
+            <WhiteButton type="submit">Create!</WhiteButton>
+          )}
+          {!creating && (
+            <BlueButton type="submit">Update!</BlueButton>
+          )}
         </Form.Group>
       </Form>
     </>

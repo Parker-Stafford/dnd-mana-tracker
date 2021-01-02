@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import CreateCharForm from './CreateCharForm';
 import { Overlay, Popup } from '../styles/DeletePopup.styles';
+import { BlueButton } from '../styles/index.styles';
 
 export default function UpdatePopup({
   updateFunc, closeFunc, showing, character, userId,
@@ -13,7 +14,7 @@ export default function UpdatePopup({
   return ReactDOM.createPortal(
     <>
       <Overlay onClick={closeFunc} />
-      <Popup>
+      <Popup style={{ width: 600 }}>
         <CreateCharForm
           charId={character.id}
           name={character.name}
@@ -26,7 +27,7 @@ export default function UpdatePopup({
           userId={userId}
           upsertFunc={updateFunc}
         />
-        <button type="button" onClick={closeFunc}>Cancel</button>
+        <BlueButton type="button" onClick={closeFunc}>Cancel</BlueButton>
       </Popup>
     </>,
     document.getElementById('portal'),

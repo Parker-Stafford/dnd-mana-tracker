@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Overlay, Popup } from '../styles/DeletePopup.styles';
+import { Overlay, Popup, DeleteButton } from '../styles/DeletePopup.styles';
 
 export default function DeletePopup({
   deleteFunc, closeFunc, name, showing,
@@ -20,8 +20,10 @@ export default function DeletePopup({
       <Popup>
         Are you sure you want to delete {name}? <br />
         This action can&apos;t be undone.
-        <button type="button" onClick={delAndClose}>Yes</button>
-        <button type="button" onClick={closeFunc}>No</button>
+        <div>
+          <DeleteButton type="button" onClick={closeFunc}>No</DeleteButton>
+          <DeleteButton type="button" onClick={delAndClose}>Yes</DeleteButton>
+        </div>
       </Popup>
     </>,
     document.getElementById('portal'),

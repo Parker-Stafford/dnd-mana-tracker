@@ -10,6 +10,14 @@ export const BodyStyle = createGlobalStyle`
   }
 `;
 
+export const BodyHeight = createGlobalStyle`
+  html, body, #__next {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+`;
+
 export const WhiteButton = styled(Button)`
   border-color: white;
   color: #153e90;
@@ -125,4 +133,14 @@ export const DashButton = styled(Button)`
     border-color: white !important;
     box-shadow: 0 0 0 0.2rem white !important;
   }
+`;
+
+export const MainWrapper = styled.div`
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const MainContent = styled.div`
+  flex: 1;
 `;
