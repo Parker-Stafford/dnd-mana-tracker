@@ -1,4 +1,7 @@
 import React, { useReducer, useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import Col from 'react-bootstrap/Col';
+import { WhiteButton } from '../styles/index.styles';
 
 export default function CreateCharForm({
   upsertFunc,
@@ -65,45 +68,61 @@ export default function CreateCharForm({
 
   return (
     <>
-      <form id="char-create" onSubmit={createCharacter} onChange={handleFormChange}>
-        <label htmlFor="name">
-          Name <span>*</span>:
-          <input id="name" type="text" defaultValue={name || null} required />
-        </label>
-        <label htmlFor="maxMana">
-          Max mana <span>*</span>:
-          <input id="maxMana" type="number" min="0" defaultValue={maxMana || '0'} required />
-        </label>
-        <label htmlFor="currentMana">
-          Current mana:
-          <input id="currentMana" type="number" min="0" defaultValue={currentMana || null} max={formValues.maxMana} />
-          {creating ? '(defaults to Max mana)' : null}
-        </label>
-        <label htmlFor="photoUrl">
-          Photo url:
-          <input id="photoUrl" type="text" defaultValue={photoUrl || null} placeholder="https://mana.com/images.jpg" />
-          {creating ? '(must be an image url of type .jpg or .png)' : null}
-          {urlWarn && (
-            <div>Incorrect url type. Please find a different url or leave blank.</div>
-          )}
-        </label>
-        <label htmlFor="level">
-          Level <span>*</span>:
-          <input id="level" type="number" min="1" defaultValue={level || '1'} />
-          {creating ? '(defaults to 1)' : null}
-        </label>
-        <label htmlFor="manaPots">
-          Mana potions:
-          <input id="manaPots" type="number" min="0" defaultValue={manaPots || '0'} />
-          {creating ? '(defaults to 0)' : null}
-        </label>
-        <label htmlFor="greaterPots">
-          Greater mana potions:
-          <input id="greaterPots" type="number" min="0" defaultValue={greaterPots || '0'} />
-          {creating ? '(defaults to 0)' : null}
-        </label>
-        <button type="submit">{creating ? 'Create!' : 'Update!'}</button>
-      </form>
+      <Form id="char-create" onSubmit={createCharacter} onChange={handleFormChange}>
+        <Form.Group as={Col}>
+          <Form.Label htmlFor="name">
+            Name <span>*</span>:
+            <Form.Control id="name" type="text" defaultValue={name || null} required />
+          </Form.Label>
+        </Form.Group>
+        <Form.Group as={Col}>
+          <Form.Label htmlFor="maxMana">
+            Max mana <span>*</span>:
+            <Form.Control id="maxMana" type="number" min="0" defaultValue={maxMana || '0'} required />
+          </Form.Label>
+        </Form.Group>
+        <Form.Group as={Col}>
+          <Form.Label htmlFor="currentMana">
+            Current mana:
+            <Form.Control id="currentMana" type="number" min="0" defaultValue={currentMana || null} />
+            {creating ? <Form.Text>(defaults to Max mana)</Form.Text> : null}
+          </Form.Label>
+        </Form.Group>
+        <Form.Group as={Col}>
+          <Form.Label htmlFor="level">
+            Level <span>*</span>:
+            <Form.Control id="level" type="number" min="1" defaultValue={level || '1'} />
+            {creating ? <Form.Text>(defaults to 1)</Form.Text> : null}
+          </Form.Label>
+        </Form.Group>
+        <Form.Group as={Col}>
+          <Form.Label htmlFor="manaPots">
+            Mana potions:
+            <Form.Control id="manaPots" type="number" min="0" defaultValue={manaPots || '0'} />
+            {creating ? <Form.Text>(defaults to 0)</Form.Text> : null}
+          </Form.Label>
+        </Form.Group>
+        <Form.Group as={Col}>
+          <Form.Label htmlFor="greaterPots">
+            Greater mana potions:
+            <Form.Control id="greaterPots" type="number" min="0" defaultValue={greaterPots || '0'} />
+            {creating ? <Form.Text>(defaults to 0)</Form.Text> : null}
+          </Form.Label>
+        </Form.Group>
+        <Form.Group as={Col}>
+          <Form.Label htmlFor="photoUrl">
+            Photo url:
+            <Form.Control id="photoUrl" type="text" defaultValue={photoUrl || null} placeholder="https://mana.com/images.jpg" />
+            {creating ? <Form.Text>(must be an image url of type .jpg or .png)</Form.Text> : null}
+            {urlWarn && (
+              <Form.Text>Incorrect url type. Please find a different url or leave blank.</Form.Text>
+            )}
+          </Form.Label>
+        </Form.Group>
+        <Form.Group as={Col}>
+          <WhiteButton type="submit">{creating ? 'Create!' : 'Update!'}</WhiteButton>
+        </Form.Group>
+      </Form>
     </>
   );
 }
