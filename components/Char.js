@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useMutation } from '@apollo/client';
-import { CharImg } from '../styles/characters.styles.js';
+import Col from 'react-bootstrap/Col';
+import Card from 'react-bootstrap/Card';
 import { DELETE_CHARACTER } from '../apollo/queries';
 import DeleteMessage from './DeleteMessage';
 import DeletePopup from './DeletePopup';
+import { BlueCard, InnerCardWrap } from '../styles/Char.styles';
+import { BlueButton } from '../styles/index.styles';
 
 export default function Char({
   id, name, photoUrl, level, currentMana, maxMana,
@@ -26,29 +29,40 @@ export default function Char({
 
   return (
     <>
-      {!data && (
+      <BlueCard as={Col} lg={3} md={6} xs={12}>
+        {!data && (
         <>
           <Link href={`/character/${id}`}>
-            <div>
-              <div>
-                <div><CharImg src={photoUrl || 'https://i.imgur.com/VKYcZgy.png'} alt="Character" />{name}</div>
-                <div>Level: {level} Mana: {currentMana}/{maxMana}</div>
-              </div>
+            <InnerCardWrap>
+              <Card.Img variant="top" src={photoUrl || 'https://i.imgur.com/29DHf92.png'} alt={`${name}`} />
+              <Card.Body>
+                <Card.Title>
+                  {name}
+                </Card.Title>
+                <Card.Text>
+                  Level: {level}
+                </Card.Text>
+                <Card.Text>
+                  Mana: {currentMana}/{maxMana}
+                </Card.Text>
+              </Card.Body>
               {error && (
-                <div>error deleting character</div>
+              <div>error deleting character</div>
               )}
-            </div>
+            </InnerCardWrap>
           </Link>
-          <button type="button" onClick={openPopup}>Delete</button>
+          <BlueButton type="button" onClick={openPopup}>Delete</BlueButton>
         </>
-      )}
-      <DeleteMessage error={error} data={data} />
-      <DeletePopup
-        showing={showing}
-        name={name}
-        closeFunc={closePopup}
-        deleteFunc={deleteChar}
-      />
+        )}
+        <DeleteMessage error={error} data={data} />
+        <DeletePopup
+          showing={showing}
+          name={name}
+          closeFunc={closePopup}
+          deleteFunc={deleteChar}
+        />
+      </BlueCard>
+
     </>
   );
 }
