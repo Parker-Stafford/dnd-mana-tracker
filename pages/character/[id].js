@@ -160,7 +160,7 @@ export default function Character({ initialCharacter, userId }) {
           {!deleteData && (
             <>
               <div>{char.name}</div>
-              <CharImg src={char.photo_url || 'https://i.imgur.com/VKYcZgy.png'} alt="Character" />
+              <CharImg src={char.photo_url || 'https://i.imgur.com/29DHf92.png'} alt="Character" />
               <div>
                 Level: {char.level} <button type="button" onClick={levelUp}>Level up!</button>
               </div>
