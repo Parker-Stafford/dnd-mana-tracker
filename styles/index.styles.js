@@ -10,6 +10,51 @@ export const BodyStyle = createGlobalStyle`
   }
 `;
 
+export const WhiteButton = styled(Button)`
+  border-color: white;
+  color: #153e90;
+  background-color: white;
+  padding: 4px 20px;
+  &:hover {
+    background-color: #153e90;
+    color: white;
+    border-color: white;
+  }
+  &:active {
+    border-color: white !important;
+    color: #153e90 !important;
+    background-color: white !important;
+  }
+  &:focus {
+    background-color: #153e90 !important;
+    color: white !important;
+    border-color: white !important;
+    box-shadow: 0 0 0 0.2rem white !important;
+  }
+`;
+
+export const BlueButton = styled(Button)`
+  border-color: #153e90;
+  color: white;
+  background-color: #153e90;
+  padding: 4px 20px;
+  &:hover {
+    background-color: white;
+    color: #153e90;
+    border-color: white;
+  }
+  &:active {
+    border-color: #153e90 !important;
+    color: white !important;
+    background-color: #153e90 !important;
+  }
+  &:focus {
+    background-color: white !important;
+    color: #153e90 !important;
+    border-color: white !important;
+    box-shadow: 0 0 0 0.2rem #153e90 !important;
+  }
+`;
 export const BlueNavBar = styled(Navbar)`
   background-color: #153e90 !important;
   color: white !important;
@@ -18,7 +63,6 @@ export const BlueNavBar = styled(Navbar)`
 export const BrandFont = styled(Navbar.Brand)`
   font-family: 'Righteous', cursive;
 `;
-
 
 export const WhiteNavItem = styled(Nav.Link)`
   color: white !important;
@@ -34,6 +78,22 @@ export const WhiteToggle = styled(Dropdown.Toggle)`
   color: #153e90;
   background-color: white;
   border: none;
+  &:hover {
+    background-color: #153e90;
+    color: white;
+    border: 1px solid white;
+  }
+  &:active {
+    border-color: white !important;
+    color: #153e90 !important;
+    background-color: white !important;
+  }
+  &:focus {
+    background-color: #153e90 !important;
+    color: white !important;
+    border-color: white !important;
+    box-shadow: 0 0 0 0.2rem white !important;
+  }
 `;
 
 export const ButtonWrapper = styled.div`
@@ -41,6 +101,7 @@ export const ButtonWrapper = styled.div`
   width: 75%;
   margin: 200px auto 0;
 `;
+
 export const DashButton = styled(Button)`
   margin: 10px auto;
   width: 250px;

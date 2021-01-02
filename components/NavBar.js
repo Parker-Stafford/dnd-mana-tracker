@@ -1,9 +1,13 @@
 import React from 'react';
 import { signOut } from 'next-auth/client';
 import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { BlueNavBar, WhiteDropDown, WhiteToggle, BrandFont } from '../styles/index.styles';
+import {
+  BlueNavBar,
+  WhiteDropDown,
+  WhiteToggle,
+  BrandFont,
+} from '../styles/index.styles';
 
 export default function NavBar({ session }) {
   return (
