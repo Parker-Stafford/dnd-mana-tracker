@@ -3,6 +3,8 @@ import Head from 'next/head';
 import { Provider } from 'next-auth/client';
 import { ApolloProvider } from '@apollo/client';
 import { useApollo } from '../apollo/config';
+import { BodyHeight, MainWrapper, MainContent } from '../styles/index.styles';
+import Footer from '../components/Footer';
 
 function MyApp({ Component, pageProps }) {
   const client = useApollo(pageProps.initialApolloState);
@@ -26,7 +28,13 @@ function MyApp({ Component, pageProps }) {
             crossOrigin="anonymous"
           />
         </Head>
-        <Component {...pageProps} />
+        <BodyHeight />
+        <MainWrapper>
+          <MainContent>
+            <Component {...pageProps} />
+          </MainContent>
+          <Footer />
+        </MainWrapper>
         <div id="portal" />
       </Provider>
     </ApolloProvider>
