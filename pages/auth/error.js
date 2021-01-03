@@ -21,7 +21,7 @@ export default function Error({ provs }) {
       <div>{errMsg} {error}</div>
       {Object.values(provs).map((provider) => (
         <div key={provider.name}>
-          <button type="button" onClick={() => { signIn(provider.id); }}>Sign in with {provider.name}</button>
+          <button type="button" onClick={() => { signIn(provider.id, { callbackUrl: `${process.env.NEXTAUTH_URL}` }); }}>Sign in with {provider.name}</button>
         </div>
       ))}
     </>
