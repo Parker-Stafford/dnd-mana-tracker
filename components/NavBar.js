@@ -29,7 +29,7 @@ export default function NavBar({ session }) {
           {session.user.email}
         </WhiteToggle>
         <Dropdown.Menu>
-          <Dropdown.Item onClick={() => { signOut() } }>
+          <Dropdown.Item onClick={() => { signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}` }); }}>
             Sign out
           </Dropdown.Item>
         </Dropdown.Menu>
