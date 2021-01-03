@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ManaChangerInput, AddButton } from '../styles/character.styles';
 
 export default function ManaChanger({ manaFunc }) {
   const [mana, setMana] = useState(0);
@@ -26,11 +27,11 @@ export default function ManaChanger({ manaFunc }) {
   }
   return (
     <form id="manaForm">
-      <button onClick={gainMana} type="button">Restore</button>
+      <AddButton onClick={loseMana} type="button">-</AddButton>
       <lable htmlFor="manaChanger">
-        <input onChange={manaChange} type="number" id="manaChanger" min="0" />
+        <ManaChangerInput onChange={manaChange} type="number" id="manaChanger" min="0" />
       </lable>
-      <button onClick={loseMana} type="button">Lose</button>
+      <AddButton onClick={gainMana} type="button">+</AddButton>
     </form>
   );
 }

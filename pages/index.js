@@ -1,29 +1,43 @@
 import Head from 'next/head';
-// import styles from '../styles/Home.module.css';
 import React from 'react';
 import Link from 'next/link';
-import { signOut, useSession } from 'next-auth/client';
-import SignIn from '../components/SignIn';
+import { useSession } from 'next-auth/client';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import MainSignIn from '../components/MainSignIn';
+import NavBar from '../components/NavBar';
+import { BodyStyle, DashButton, ButtonWrapper } from '../styles/index.styles';
 
 export default function Home() {
   const [session, loading] = useSession();
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
       <Head>
         <title>DnD Mana Tracker</title>
       </Head>
-      {loading && (
-        <div>loading...</div>
-      )}
+      <BodyStyle session={session} />
       {!session && (
-        <SignIn />
+        <MainSignIn />
       )}
       {session && (
       <>
-        <div>Signed in as {session.user.email}</div> <br />
-        <Link href="/characters"><button type="button">Characters</button></Link>
-        <Link href="/create-character"><button type="button">New Character</button></Link> <br />
-        <button type="button" onClick={() => { signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}` }); }}>Sign out</button>
+        <NavBar session={session} />
+        <ButtonWrapper>
+          <Container fluid>
+            <Row>
+              <Col xs={12} md={6}>
+                <Link href="/characters"><DashButton type="button">My Characters</DashButton></Link>
+              </Col>
+              <Col xs={12} md={6}>
+                <Link href="/create-character"><DashButton type="button">New Character <br /> +</DashButton></Link>
+              </Col>
+            </Row>
+          </Container>
+        </ButtonWrapper>
       </>
       )}
     </>

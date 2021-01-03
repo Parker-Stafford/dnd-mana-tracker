@@ -1,13 +1,14 @@
 import Head from 'next/head';
 // import styles from '../styles/Home.module.css';
 import React from 'react';
-import Link from 'next/link';
-import { signOut, useSession } from 'next-auth/client';
+import { useSession } from 'next-auth/client';
 import { useMutation } from '@apollo/client';
 import { UPSERT_CHARACTER } from '../apollo/queries';
 import SignIn from '../components/SignIn';
 import Char from '../components/Char';
 import CreateCharForm from '../components/CreateCharForm';
+import NavBar from '../components/NavBar';
+import { FormWrapper, Title } from '../styles/create-character.styles';
 
 export default function CreateCharacter() {
   const [session, loading] = useSession();
@@ -26,10 +27,11 @@ export default function CreateCharacter() {
       )}
       {session && (
         <>
-          <CreateCharForm upsertFunc={upsertChar} userId={session.user.id} creating />
-          <button type="button" onClick={() => { signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}` }); }}>Sign out</button>
-          <Link href="/characters"><button type="button">Characters</button></Link>
-          <Link href="/"><button type="button">Home</button></Link>
+          <NavBar session={session} />
+          <Title>Create a character!</Title>
+          <FormWrapper>
+            <CreateCharForm upsertFunc={upsertChar} userId={session.user.id} creating />
+          </FormWrapper>
           {error && (
             <div>
               {JSON.stringify(error)}

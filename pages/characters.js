@@ -1,12 +1,15 @@
 import React from 'react';
 import Head from 'next/head';
-// import styles from '../styles/Home.module.css';
-import Link from 'next/link';
-import { signOut, useSession, getSession } from 'next-auth/client';
+import { useSession, getSession } from 'next-auth/client';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
 import { initializeApollo } from '../apollo/config';
 import { GET_CHARACTERS } from '../apollo/queries';
 import SignIn from '../components/SignIn';
 import Char from '../components/Char';
+import NavBar from '../components/NavBar';
+import { CardWrapper } from '../styles/Char.styles';
+import { Title } from '../styles/create-character.styles';
 
 export default function Characters({ characters }) {
   const [session, loading] = useSession();
@@ -24,20 +27,23 @@ export default function Characters({ characters }) {
       )}
       {session && (
         <>
-          {characters.map((character) => (
-            <Char
-              key={character.id}
-              id={character.id}
-              name={character.name}
-              photoUrl={character.photo_url}
-              level={character.level}
-              currentMana={character.current_mana}
-              maxMana={character.max_mana}
-            />
-          ))}
-          <Link href="/"><button type="button">Home</button></Link>
-          <Link href="/create-character"><button type="button">New Character</button></Link> <br />
-          <button type="button" onClick={() => { signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}` }); }}>Sign out</button>
+          <NavBar session={session} />
+          <Title>Characters</Title>
+          <CardWrapper as={Container}>
+            <Row>
+              {characters.map((character) => (
+                <Char
+                  key={character.id}
+                  id={character.id}
+                  name={character.name}
+                  photoUrl={character.photo_url}
+                  level={character.level}
+                  currentMana={character.current_mana}
+                  maxMana={character.max_mana}
+                />
+              ))}
+            </Row>
+          </CardWrapper>
         </>
       )}
     </>

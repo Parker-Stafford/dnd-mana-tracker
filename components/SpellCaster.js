@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import spellMap from '../helpers/spellManaMap';
+import { BasicHeader, CastButton } from '../styles/character.styles';
 
 export default function SpellCaster({ castFunc }) {
   const [spellLevel, setSpellLevel] = useState('cantrip');
@@ -15,7 +16,8 @@ export default function SpellCaster({ castFunc }) {
 
   return (
     <form>
-      <label htmlFor="spellLevel">Spell level:
+      <BasicHeader>Spells:</BasicHeader>
+      <label htmlFor="spellLevel">
         <select onChange={changeLevel} id="spellLevel">
           <option value="cantrip">Cantrip</option>
           <option value={1}>1</option>
@@ -29,7 +31,7 @@ export default function SpellCaster({ castFunc }) {
           <option value={9}>9</option>
         </select>
       </label>
-      <button type="submit" onClick={cast}>Cast!</button>
+      <CastButton type="submit" onClick={cast}>Cast!</CastButton>
     </form>
   );
 }

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
-import { signOut, useSession, getSession } from 'next-auth/client';
+import { useSession, getSession } from 'next-auth/client';
 import { useMutation } from '@apollo/client';
 import { initializeApollo } from '../../apollo/config';
 import { GET_CHARACTER, DELETE_CHARACTER, UPSERT_CHARACTER } from '../../apollo/queries';
@@ -11,7 +10,24 @@ import DeletePopup from '../../components/DeletePopup';
 import UpdatePopup from '../../components/UpdatePopup';
 import SpellCaster from '../../components/SpellCaster';
 import ManaChanger from '../../components/ManaChanger';
-import { CharImg } from '../../styles/characters.styles.js';
+import NavBar from '../../components/NavBar';
+import {
+  CharImg,
+  ManaBar,
+  CharWrapper,
+  ImageDiv,
+  AddButton,
+  BasicHeader,
+  InfoDiv,
+  PotionDiv,
+  PotionWrap,
+  ManaChangerTitle,
+  ManaDiv,
+  PotsAndRests,
+  CharButtons,
+  ButtonsDiv,
+} from '../../styles/character.styles';
+import { BlueButton } from '../../styles/index.styles';
 
 export default function Character({ initialCharacter, userId }) {
   const [session, loading] = useSession();
@@ -154,48 +170,75 @@ export default function Character({ initialCharacter, userId }) {
       )}
       {session && (
         <>
+          <NavBar session={session} />
           {deleteData && (
-            <DeleteMessage data={deleteData} />
+          <DeleteMessage data={deleteData} />
           )}
           {!deleteData && (
-            <>
-              <div>{char.name}</div>
-              <CharImg src={char.photo_url || 'https://i.imgur.com/VKYcZgy.png'} alt="Character" />
-              <div>
-                Level: {char.level} <button type="button" onClick={levelUp}>Level up!</button>
-              </div>
-              <div>
-                Mana: {char.current_mana}/{char.max_mana}
-                <ManaChanger manaFunc={castSpell} />
-              </div>
-              <br />
-              <button id="manaPots" type="button" disabled={!char.mana_pots} onClick={drinkPotion}>Drink mana potion {char.mana_pots}</button>
-              <button id="addMPot" type="button" onClick={addPotion}>Add mana pot +</button>
-              <button id="greaterPots" type="button" disabled={!char.greater_pots} onClick={drinkPotion}>Drink greater mana potion {char.greater_pots}</button>
-              <button id="addGPot" type="button" onClick={addPotion}>Add greater mana pot +</button>
-              <br /><br />
-              <button id="shortRest" type="button" onClick={takeRest}>Short rest</button>
-              <button id="longRest" type="button" onClick={takeRest}>Long rest</button>
-              <SpellCaster castFunc={castSpell} />
-              <br />
-              <button type="button" onClick={openDelete}>Delete</button>
-              <button type="button" onClick={openUpdate}>Edit</button>
-              <button type="button" onClick={() => { signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}` }); }}>Sign out</button>
+          <>
+            <CharWrapper>
+              <ImageDiv>
+                <CharImg src={char.photo_url || 'https://i.imgur.com/29DHf92.png'} alt="Character" />
+                <h3>{char.name}</h3>
+              </ImageDiv>
+              <InfoDiv>
+                <BasicHeader>Level:</BasicHeader>
+                {char.level} <AddButton type="button" onClick={levelUp}>+</AddButton>
+              </InfoDiv>
+              <InfoDiv>
+                <BasicHeader>Mana:</BasicHeader>{char.current_mana}/{char.max_mana}
+                <ManaBar now={(char.current_mana / char.max_mana) * 100} label={`${char.current_mana}/${char.max_mana}`} />
+                <PotionWrap>
+                  <ManaDiv>
+                    <ManaChangerTitle>Modify</ManaChangerTitle>
+                  </ManaDiv>
+                  <ManaDiv>
+                    <ManaChanger manaFunc={castSpell} />
+                  </ManaDiv>
+                </PotionWrap>
+              </InfoDiv>
+              <PotsAndRests>
+                <PotionWrap>
+                  <PotionDiv>
+                    <h6>Mana potions:</h6>
+                    <BlueButton id="manaPots" type="button" disabled={!char.mana_pots} onClick={drinkPotion}><i className="fas fa-flask" /> {char.mana_pots}</BlueButton>
+                    <AddButton id="addMPot" type="button" onClick={addPotion}>+</AddButton>
+                  </PotionDiv>
+                  <PotionDiv>
+                    <h6>Greater mana potions:</h6>
+                    <BlueButton id="greaterPots" type="button" disabled={!char.greater_pots} onClick={drinkPotion}><i className="fas fa-flask" />  {char.greater_pots}</BlueButton>
+                    <AddButton id="addGPot" type="button" onClick={addPotion}>+</AddButton>
+                  </PotionDiv>
+                </PotionWrap>
+                <PotionWrap>
+                  <h6>Rests:</h6>
+                  <PotionDiv>
+                    <BlueButton id="shortRest" type="button" onClick={takeRest}>Short rest</BlueButton>
+                  </PotionDiv>
+                  <PotionDiv>
+                    <BlueButton id="longRest" type="button" onClick={takeRest}>Long rest</BlueButton>
+                  </PotionDiv>
+                </PotionWrap>
+              </PotsAndRests>
+              <InfoDiv>
+                <SpellCaster castFunc={castSpell} />
+              </InfoDiv>
+              <ButtonsDiv>
+                <CharButtons type="button" onClick={openDelete}>Delete</CharButtons>
+                <CharButtons type="button" onClick={openUpdate}>Edit</CharButtons>
+              </ButtonsDiv>
               {deleteError && (
-                <DeleteMessage error={deleteError} data={deleteData} />
+              <DeleteMessage error={deleteError} data={deleteData} />
               )}
               {upsertError && (
-                <>
-                  <div>Error updating {char.name} please try again!</div>
-                  {JSON.stringify(upsertError)}
-                </>
+              <>
+                <div>Error updating {char.name} please try again!</div>
+                {JSON.stringify(upsertError)}
+              </>
               )}
-            </>
+            </CharWrapper>
+          </>
           )}
-          <br />
-          <Link href="/"><button type="button">Home</button></Link>
-          <Link href="/create-character"><button type="button">New Character</button></Link>
-          <Link href="/characters"><button type="button">Characters</button></Link>
           <DeletePopup
             showing={showDelete}
             name={char.name}

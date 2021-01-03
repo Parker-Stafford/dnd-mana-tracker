@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { BlueButton } from './index.styles';
 
 export const Overlay = styled.div`
   position: fixed;
@@ -20,4 +21,11 @@ background-color: white;
 transform: translate(-50%, -50%);
 border-radius: 12px;
 box-sizing: border-box;
+width: 400px;
+padding: 40px 0;
+text-align: center;
+`;
+
+export const DeleteButton = styled(BlueButton)`
+  margin: 20px 10px 0;
 `;
