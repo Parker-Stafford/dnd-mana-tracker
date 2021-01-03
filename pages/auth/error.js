@@ -18,7 +18,7 @@ export default function Error({ provs }) {
   }, [error]);
   return (
     <>
-      <div>{errMsg}</div>
+      <div>{errMsg} {error}</div>
       {Object.values(provs).map((provider) => (
         <div key={provider.name}>
           <button type="button" onClick={() => { signIn(provider.id); }}>Sign in with {provider.name}</button>
