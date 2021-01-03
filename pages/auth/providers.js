@@ -37,7 +37,7 @@ export default function SignIn({ provs }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const provs = await getProviders();
   return {
     props: {
