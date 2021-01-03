@@ -19,13 +19,13 @@ export default function SignIn({ provs }) {
         {Object.values(provs).map((provider) => (
           <ProviderDiv key={provider.name}>
             {provider.name === 'Google' && (
-              <GButton type="button" onClick={() => { signIn(provider.id, { callbackUrl: `${process.env.NEXTAUTH_URL}` }); }}>
+              <GButton type="button" onClick={() => { signIn(provider.id); }}>
                 <GoogleIcon />
                 <GText>Sign in with Google</GText>
               </GButton>
             )}
             {provider.name === 'Facebook' && (
-              <FBButton type="button" onClick={() => { signIn(provider.id, { callbackUrl: `${process.env.NEXTAUTH_URL}` }); }}>
+              <FBButton type="button" onClick={() => { signIn(provider.id); }}>
                 <FBIcon className="fab fa-facebook" />
                 <div>Sign in with Facebook</div>
               </FBButton>
