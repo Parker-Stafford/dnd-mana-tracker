@@ -63,6 +63,11 @@ export const BlueButton = styled(Button)`
     border-color: white !important;
     box-shadow: 0 0 0 0.2rem #153e90 !important;
   }
+  &:disabled {
+    background-color: grey;
+    border-color: #153e90;
+    color: black;
+  }
 `;
 export const BlueNavBar = styled(Navbar)`
   background-color: #153e90 !important;
