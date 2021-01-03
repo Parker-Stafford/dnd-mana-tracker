@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { providers, signIn } from 'next-auth/client';
+import { getProviders, signIn } from 'next-auth/client';
 
 export default function Error({ provs }) {
   const [error, setError] = useState('');
@@ -29,9 +29,10 @@ export default function Error({ provs }) {
 }
 
 export async function getStaticProps() {
+  const provs = await getProviders();
   return {
     props: {
-      provs: await providers(),
+      provs,
     },
   };
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { providers, signIn } from 'next-auth/client';
+import { getProviders, signIn } from 'next-auth/client';
 import GoogleIcon from '../../components/GoogleIcon';
 import {
   FBButton,
@@ -38,9 +38,10 @@ export default function SignIn({ provs }) {
 }
 
 export async function getStaticProps() {
+  const provs = await getProviders();
   return {
     props: {
-      provs: await providers(),
+      provs,
     },
   };
 }
