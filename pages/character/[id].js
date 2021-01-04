@@ -233,7 +233,6 @@ export default function Character({ initialCharacter, userId }) {
               {upsertError && (
               <>
                 <div>Error updating {char.name} please try again!</div>
-                {JSON.stringify(upsertError)}
               </>
               )}
             </CharWrapper>
