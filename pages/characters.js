@@ -3,12 +3,13 @@ import Head from 'next/head';
 import { useSession, getSession } from 'next-auth/client';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import { initializeApollo } from '../apollo/config';
 import { GET_CHARACTERS } from '../apollo/queries';
 import SignIn from '../components/SignIn';
 import Char from '../components/Char';
 import NavBar from '../components/NavBar';
-import { CardWrapper } from '../styles/Char.styles';
+import { CardWrapper, BlueCard } from '../styles/Char.styles';
 import { Title } from '../styles/create-character.styles';
 
 export default function Characters({ characters }) {
@@ -32,15 +33,17 @@ export default function Characters({ characters }) {
           <CardWrapper as={Container}>
             <Row>
               {characters.map((character) => (
-                <Char
-                  key={character.id}
-                  id={character.id}
-                  name={character.name}
-                  photoUrl={character.photo_url}
-                  level={character.level}
-                  currentMana={character.current_mana}
-                  maxMana={character.max_mana}
-                />
+                <BlueCard as={Col} lg={3} md={6} xs={12}>
+                  <Char
+                    key={character.id}
+                    id={character.id}
+                    name={character.name}
+                    photoUrl={character.photo_url}
+                    level={character.level}
+                    currentMana={character.current_mana}
+                    maxMana={character.max_mana}
+                  />
+                </BlueCard>
               ))}
             </Row>
           </CardWrapper>
