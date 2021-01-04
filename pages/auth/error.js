@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { getProviders, signIn } from 'next-auth/client';
+import GoogleIcon from '../../components/GoogleIcon';
+import {
+  FBButton,
+  FBIcon,
+  GButton,
+  GText,
+  ProvidersWrapper,
+  ProviderDiv,
+  Title,
+} from '../../styles/providers.styles';
 
 export default function Error({ provs }) {
   const [error, setError] = useState('');
@@ -18,12 +28,25 @@ export default function Error({ provs }) {
   }, [error]);
   return (
     <>
-      <div>{errMsg} {error}</div>
-      {Object.values(provs).map((provider) => (
-        <div key={provider.name}>
-          <button type="button" onClick={() => { signIn(provider.id, { callbackUrl: `${process.env.NEXTAUTH_URL}` }); }}>Sign in with {provider.name}</button>
-        </div>
-      ))}
+      <ProvidersWrapper>
+      <Title>{errMsg}</Title>
+        {Object.values(provs).map((provider) => (
+          <ProviderDiv key={provider.name}>
+            {provider.name === 'Google' && (
+              <GButton type="button" onClick={() => { signIn(provider.id, { callbackUrl: `${process.env.NEXTAUTH_URL}` }); }}>
+                <GoogleIcon />
+                <GText>Sign in with Google</GText>
+              </GButton>
+            )}
+            {provider.name === 'Facebook' && (
+              <FBButton type="button" onClick={() => { signIn(provider.id, { callbackUrl: `${process.env.NEXTAUTH_URL}` }); }}>
+                <FBIcon className="fab fa-facebook" />
+                <div>Sign in with Facebook</div>
+              </FBButton>
+            )}
+          </ProviderDiv>
+        ))}
+      </ProvidersWrapper>
     </>
   );
 }
