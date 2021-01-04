@@ -8,7 +8,8 @@ import SignIn from '../components/SignIn';
 import Char from '../components/Char';
 import CreateCharForm from '../components/CreateCharForm';
 import NavBar from '../components/NavBar';
-import { FormWrapper, Title } from '../styles/create-character.styles';
+import { FormWrapper, Title, CharWrapper } from '../styles/create-character.styles';
+import { BlueCard } from '../styles/Char.styles';
 
 export default function CreateCharacter() {
   const [session, loading] = useSession();
@@ -34,22 +35,24 @@ export default function CreateCharacter() {
           </FormWrapper>
           {error && (
             <div>
-              {JSON.stringify(error)}
               There was an error creating your character. Please check your inputs and try again!
             </div>
           )}
           {data && (
-            <div>
+            <CharWrapper>
               Character created, click to go to character page!
-              <Char
-                name={data.upsertCharacter.name}
-                photoUrl={data.upsertCharacter.photo_url}
-                level={data.upsertCharacter.level}
-                currentMana={data.upsertCharacter.current_mana}
-                maxMana={data.upsertCharacter.max_mana}
-                id={data.upsertCharacter.id}
-              />
-            </div>
+              <BlueCard create>
+                <Char
+                  name={data.upsertCharacter.name}
+                  photoUrl={data.upsertCharacter.photo_url}
+                  level={data.upsertCharacter.level}
+                  currentMana={data.upsertCharacter.current_mana}
+                  maxMana={data.upsertCharacter.max_mana}
+                  id={data.upsertCharacter.id}
+                  create
+                />
+              </BlueCard>
+            </CharWrapper>
           )}
         </>
       )}
