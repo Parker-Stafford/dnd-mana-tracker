@@ -60,3 +60,11 @@ export const DELETE_CHARACTER = gql`
     }
   }
 `;
+
+export const DELETE_USER = gql`
+  mutation DeleteUser($id: ID!) {
+    deleteUser(id: $id) {
+      email
+    }
+  }
+`;

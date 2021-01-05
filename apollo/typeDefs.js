@@ -20,6 +20,7 @@ const typeDefs = gql`
       id: ID
     ): Character!
     deleteCharacter(id: ID!): Character
+    deleteUser(id: ID!): User
   }
 
   type Character {
@@ -32,6 +33,16 @@ const typeDefs = gql`
     mana_pots: Int
     greater_pots: Int
     user_id: Int!
+  }
+
+  type User {
+    id: ID!
+    name: String
+    email: String
+    email_verified: String
+    image: String
+    created_at: String!
+    updated_at: String!
   }
 `;
 

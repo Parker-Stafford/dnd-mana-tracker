@@ -42,6 +42,10 @@ const resolvers = {
         where: { id },
       });
     },
+    async deleteUser(_parent, args) {
+      const id = +args.id;
+      return prisma.$queryRaw`DELETE FROM users WHERE id=${id}`;
+    },
   },
 };
 

@@ -29,7 +29,7 @@ export default function Error({ provs }) {
   return (
     <>
       <ProvidersWrapper>
-      <Title>{errMsg}</Title>
+        <Title>{errMsg}</Title>
         {Object.values(provs).map((provider) => (
           <ProviderDiv key={provider.name}>
             {provider.name === 'Google' && (

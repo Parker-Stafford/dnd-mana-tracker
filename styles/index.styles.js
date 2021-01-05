@@ -149,3 +149,10 @@ export const MainWrapper = styled.div`
 export const MainContent = styled.div`
   flex: 1;
 `;
+
+export const DeleteAcc = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 30px;
+`;
