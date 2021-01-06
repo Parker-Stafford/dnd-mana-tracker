@@ -28,7 +28,7 @@ Once the project moves into development, the press release can be used as a touc
   To get started visit the [app](https://dnd-mana-tracker.vercel.app), sign up for an account and start making characters!
 
 ## Development notes ##
-  This project is under continuous development. New features are on the way! If you interested in contributing on this project please contact me!
+  This project is under continuous development. New features are on the way! If you are interested in contributing on this project please contact me!
 
 ### Upcoming features ###
   - Campaign creation and managment
