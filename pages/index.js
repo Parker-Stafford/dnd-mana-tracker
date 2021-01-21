@@ -29,11 +29,17 @@ export default function Home() {
         <ButtonWrapper>
           <Container fluid>
             <Row>
-              <Col xs={12} md={6}>
+              <Col xs={12} md={3}>
                 <Link href="/characters"><DashButton type="button">My Characters</DashButton></Link>
               </Col>
-              <Col xs={12} md={6}>
+              <Col xs={12} md={3}>
                 <Link href="/create-character"><DashButton type="button">New Character <br /> +</DashButton></Link>
+              </Col>
+              <Col xs={12} md={3}>
+                <Link href="/campaigns"><DashButton type="button">My Campaigns</DashButton></Link>
+              </Col>
+              <Col xs={12} md={3}>
+                <Link href="/create-campaign"><DashButton type="button">New Campaign <br /> +</DashButton></Link>
               </Col>
             </Row>
           </Container>
