@@ -14,6 +14,7 @@ import {
 
 export default function NavBar({ session }) {
   const [deleteUser, { data, error }] = useMutation(DELETE_USER);
+
   return (
     <>
       {!data && (
