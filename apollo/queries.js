@@ -53,6 +53,27 @@ export const UPSERT_CHARACTER = gql`
   }
 `;
 
+export const UPSERT_CAMPAIGN = gql`
+  mutation UpsertCampaign( $id: ID, $name: String, $manaPotValue: Int, $greaterPotValue: Int, $cantripCost: Int, $spell1Cost: Int, $spell2Cost: Int, $spell3Cost: Int, $spell4Cost: Int, $spell5Cost: Int, $spell6Cost: Int, $spell7Cost: Int, $spell8Cost: Int, $spell9Cost: Int, $user_id: Int) {
+    upsertCampaign(id: $id, name: $name, manaPotValue: $manaPotValue, greaterPotValue: $greaterPotValue, cantripCost: $cantripCost, spell1Cost: $spell1Cost, spell2Cost: $spell2Cost, spell3Cost: $spell3Cost, spell4Cost: $spell4Cost, spell5Cost: $spell5Cost, spell6Cost: $spell6Cost, spell7Cost: $spell7Cost, spell8Cost: $spell8Cost, spell9Cost: $spell9Cost, user_id: $user_id) {
+      id
+      name
+      manaPotValue
+      greaterPotValue
+      cantripCost
+      spell1Cost
+      spell2Cost
+      spell3Cost
+      spell4Cost
+      spell5Cost
+      spell6Cost
+      spell7Cost
+      spell8Cost
+      spell9Cost
+    }
+  }
+`;
+
 export const DELETE_CHARACTER = gql`
   mutation DeleteCharacter($id: ID!) {
     deleteCharacter(id: $id) {
