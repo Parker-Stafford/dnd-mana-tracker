@@ -27,7 +27,7 @@ model accounts {
 }
 
 model characters {
-  id           Int     @id @default(autoincrement())
+  id           Int        @id @default(autoincrement())
   name         String
   current_mana Int?
   max_mana     Int
@@ -36,7 +36,9 @@ model characters {
   mana_pots    Int?
   greater_pots Int?
   user_id      Int
-  users        users   @relation(fields: [user_id], references: [id])
+  campaign_id  Int?
+  campaigns    campaigns? @relation(fields: [campaign_id], references: [id])
+  users        users      @relation(fields: [user_id], references: [id])
 }
 
 model sessions {
@@ -59,6 +61,7 @@ model users {
   created_at     DateTime     @default(now())
   updated_at     DateTime     @default(now())
   accounts       accounts[]
+  campaigns      campaigns[]
   characters     characters[]
   sessions       sessions[]
 
@@ -72,4 +75,24 @@ model verification_requests {
   expires    DateTime
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
+}
+
+model campaigns {
+  id              Int          @id @default(autoincrement())
+  name            String
+  manaPotValue    Int?
+  greaterPotValue Int?
+  cantripCost     Int?
+  spell1Cost      Int?
+  spell2Cost      Int?
+  spell3Cost      Int?
+  spell4Cost      Int?
+  spell5Cost      Int?
+  spell6Cost      Int?
+  spell7Cost      Int?
+  spell8Cost      Int?
+  spell9Cost      Int?
+  user_id         Int
+  users           users        @relation(fields: [user_id], references: [id])
+  characters      characters[]
 }
