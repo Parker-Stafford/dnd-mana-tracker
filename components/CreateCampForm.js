@@ -52,86 +52,87 @@ export default function CreateCampForm({
   }
 
   async function createCampaign(event) {
-    console.log('test');
     event.preventDefault();
     const insert = campaignValues;
     insert.user_id = userId;
     const result = await upsertFunc({ variables: insert });
     if (result) {
-      console.log('Campaign created!');
+      document.getElementById('camp-create').reset();
     }
   }
 
   return (
     <>
-      <Form id="camp-create" onSubmit={createCampaign} onChange={handleFormChange}>
-        <Form.Group as={Row}>
-          <Form.Label as={Col} htmlFor="name">
-            Name <span>*</span>:
-            <Form.Control id="name" type="text" required />
-          </Form.Label>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <Form.Label as={Col} htmlFor="manaPotValue">
-            Mana potion restore value:
-            <Form.Control id="manaPotValue" type="number" min="0" />
-          </Form.Label>
-          <Form.Label as={Col} htmlFor="greaterPotValue">
-            Greater mana potion restore value:
-            <Form.Control id="greaterPotValue" type="number" min="0" />
-          </Form.Label>
-        </Form.Group>
-        <Row>Spell costs:</Row>
-        <Form.Group as={Row}>
-          <Form.Label as={Col} htmlFor="cantripCost">
-            Cantrip:
-            <Form.Control id="cantripCost" type="number" min="0" />
-          </Form.Label>
-          <Form.Label as={Col} htmlFor="spell1Cost">
-            Level 1:
-            <Form.Control id="spell1Cost" type="number" min="0" />
-          </Form.Label>
-          <Form.Label as={Col} htmlFor="spell2Cost">
-            Level 2:
-            <Form.Control id="spell2Cost" type="number" min="0" />
-          </Form.Label>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <Form.Label as={Col} htmlFor="spell3Cost">
-            Level 3:
-            <Form.Control id="spell3Cost" type="number" min="0" />
-          </Form.Label>
-          <Form.Label as={Col} htmlFor="spell4Cost">
-            Level 4:
-            <Form.Control id="spell4Cost" type="number" min="0" />
-          </Form.Label>
-          <Form.Label as={Col} htmlFor="spell5Cost">
-            Level 5:
-            <Form.Control id="spell5Cost" type="number" min="0" />
-          </Form.Label>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <Form.Label as={Col} htmlFor="spell6Cost">
-            Level 6:
-            <Form.Control id="spell6Cost" type="number" min="0" />
-          </Form.Label>
-          <Form.Label as={Col} htmlFor="spell7Cost">
-            Level 7:
-            <Form.Control id="spell7Cost" type="number" min="0" />
-          </Form.Label>
-          <Form.Label as={Col} htmlFor="spell8Cost">
-            Level 8:
-            <Form.Control id="spell8Cost" type="number" min="0" />
-          </Form.Label>
-          <Form.Label as={Col} htmlFor="spell9Cost">
-            Level 9:
-            <Form.Control id="spell9Cost" type="number" min="0" />
-          </Form.Label>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <WhiteButton type="submit">Create!</WhiteButton>
-        </Form.Group>
-      </Form>
+      <Container>
+        <Form id="camp-create" onSubmit={createCampaign} onChange={handleFormChange}>
+          <Form.Group as={Row}>
+            <Form.Label as={Col} htmlFor="name">
+              Name <span>*</span>:
+              <Form.Control id="name" type="text" required />
+            </Form.Label>
+          </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label as={Col} htmlFor="manaPotValue">
+              Mana potion restore value:
+              <Form.Control id="manaPotValue" type="number" min="0" />
+            </Form.Label>
+            <Form.Label as={Col} htmlFor="greaterPotValue">
+              Greater mana potion restore value:
+              <Form.Control id="greaterPotValue" type="number" min="0" />
+            </Form.Label>
+          </Form.Group>
+          <Row>Spell costs:</Row>
+          <Form.Group as={Row}>
+            <Form.Label as={Col} htmlFor="cantripCost">
+              Cantrip:
+              <Form.Control id="cantripCost" type="number" min="0" />
+            </Form.Label>
+            <Form.Label as={Col} htmlFor="spell1Cost">
+              Level 1:
+              <Form.Control id="spell1Cost" type="number" min="0" />
+            </Form.Label>
+            <Form.Label as={Col} htmlFor="spell2Cost">
+              Level 2:
+              <Form.Control id="spell2Cost" type="number" min="0" />
+            </Form.Label>
+          </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label as={Col} htmlFor="spell3Cost">
+              Level 3:
+              <Form.Control id="spell3Cost" type="number" min="0" />
+            </Form.Label>
+            <Form.Label as={Col} htmlFor="spell4Cost">
+              Level 4:
+              <Form.Control id="spell4Cost" type="number" min="0" />
+            </Form.Label>
+            <Form.Label as={Col} htmlFor="spell5Cost">
+              Level 5:
+              <Form.Control id="spell5Cost" type="number" min="0" />
+            </Form.Label>
+          </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label as={Col} htmlFor="spell6Cost">
+              Level 6:
+              <Form.Control id="spell6Cost" type="number" min="0" />
+            </Form.Label>
+            <Form.Label as={Col} htmlFor="spell7Cost">
+              Level 7:
+              <Form.Control id="spell7Cost" type="number" min="0" />
+            </Form.Label>
+            <Form.Label as={Col} htmlFor="spell8Cost">
+              Level 8:
+              <Form.Control id="spell8Cost" type="number" min="0" />
+            </Form.Label>
+            <Form.Label as={Col} htmlFor="spell9Cost">
+              Level 9:
+              <Form.Control id="spell9Cost" type="number" min="0" />
+            </Form.Label>
+          </Form.Group>
+          <Form.Group as={Row}>
+            <WhiteButton type="submit">Create!</WhiteButton>
+          </Form.Group>
+        </Form>
+      </Container>
     </>
   );
 }
