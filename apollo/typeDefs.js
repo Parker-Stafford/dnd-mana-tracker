@@ -27,18 +27,18 @@ const typeDefs = gql`
     upsertCampaign(
       id: ID,
       name: String,
-      manaPotValue: Int,
-      greaterPotValue: Int,
-      cantripCost: Int,
-      spell1Cost: Int,
-      spell2Cost: Int,
-      spell3Cost: Int,
-      spell4Cost: Int,
-      spell5Cost: Int,
-      spell6Cost: Int,
-      spell7Cost: Int,
-      spell8Cost: Int,
-      spell9Cost: Int,
+      mana_pot_value: Int,
+      greater_pot_value: Int,
+      cantrip_cost: Int,
+      spell_1_cost: Int,
+      spell_2_cost: Int,
+      spell_3_cost: Int,
+      spell_4_cost: Int,
+      spell_5_cost: Int,
+      spell_6_cost: Int,
+      spell_7_cost: Int,
+      spell_8_cost: Int,
+      spell_9_cost: Int,
       user_id: Int,
     ): Campaign!
   }
@@ -58,18 +58,18 @@ const typeDefs = gql`
   type Campaign {
     id: ID!
     name: String!
-    manaPotValue: Int
-    greaterPotValue: Int
-    cantripCost: Int
-    spell1Cost: Int
-    spell2Cost: Int
-    spell3Cost: Int
-    spell4Cost: Int
-    spell5Cost: Int
-    spell6Cost: Int
-    spell7Cost: Int
-    spell8Cost: Int
-    spell9Cost: Int
+    mana_pot_value: Int
+    greater_pot_value: Int
+    cantrip_cost: Int
+    spell_1_cost: Int
+    spell_2_cost: Int
+    spell_3_cost: Int
+    spell_4_cost: Int
+    spell_5_cost: Int
+    spell_6_cost: Int
+    spell_7_cost: Int
+    spell_8_cost: Int
+    spell_9_cost: Int
     user_id: Int!
   }
 

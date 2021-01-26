@@ -55,21 +55,21 @@ export const UPSERT_CHARACTER = gql`
 
 export const UPSERT_CAMPAIGN = gql`
   mutation UpsertCampaign( $id: ID, $name: String, $manaPotValue: Int, $greaterPotValue: Int, $cantripCost: Int, $spell1Cost: Int, $spell2Cost: Int, $spell3Cost: Int, $spell4Cost: Int, $spell5Cost: Int, $spell6Cost: Int, $spell7Cost: Int, $spell8Cost: Int, $spell9Cost: Int, $user_id: Int) {
-    upsertCampaign(id: $id, name: $name, manaPotValue: $manaPotValue, greaterPotValue: $greaterPotValue, cantripCost: $cantripCost, spell1Cost: $spell1Cost, spell2Cost: $spell2Cost, spell3Cost: $spell3Cost, spell4Cost: $spell4Cost, spell5Cost: $spell5Cost, spell6Cost: $spell6Cost, spell7Cost: $spell7Cost, spell8Cost: $spell8Cost, spell9Cost: $spell9Cost, user_id: $user_id) {
+    upsertCampaign(id: $id, name: $name, mana_pot_value: $manaPotValue, greater_pot_value: $greaterPotValue, cantrip_cost: $cantripCost, spell_1_cost: $spell1Cost, spell_2_cost: $spell2Cost, spell_3_cost: $spell3Cost, spell_4_cost: $spell4Cost, spell_5_cost: $spell5Cost, spell_6_cost: $spell6Cost, spell_7_cost: $spell7Cost, spell_8_cost: $spell8Cost, spell_9_cost: $spell9Cost, user_id: $user_id) {
       id
       name
-      manaPotValue
-      greaterPotValue
-      cantripCost
-      spell1Cost
-      spell2Cost
-      spell3Cost
-      spell4Cost
-      spell5Cost
-      spell6Cost
-      spell7Cost
-      spell8Cost
-      spell9Cost
+      mana_pot_value
+      greater_pot_value
+      cantrip_cost
+      spell_1_cost
+      spell_2_cost
+      spell_3_cost
+      spell_4_cost
+      spell_5_cost
+      spell_6_cost
+      spell_7_cost
+      spell_8_cost
+      spell_9_cost
     }
   }
 `;
