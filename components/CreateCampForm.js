@@ -24,8 +24,8 @@ export default function CreateCampForm({
 }) {
   const values = {
     name: name || '',
-    manaPotValue: manaPotValue || 0,
-    greaterPotValue: greaterPotValue || 0,
+    manaPotValue: manaPotValue || '',
+    greaterPotValue: greaterPotValue || '',
     cantripCost: cantripCost || 0,
     spell1Cost: spell1Cost || 0,
     spell2Cost: spell2Cost || 0,
@@ -72,13 +72,43 @@ export default function CreateCampForm({
             </Form.Label>
           </Form.Group>
           <Form.Group as={Row}>
-            <Form.Label as={Col} htmlFor="manaPotValue">
-              Mana potion restore value:
-              <Form.Control id="manaPotValue" type="number" min="0" />
+            <Form.Label as={Col}>
+              Mana potions:
+              <Row>
+                <Col>Dice<Form.Text>(Ex. 6 for d6)</Form.Text></Col>
+                <Col># of Dice<Form.Text>(Ex. 3 for 3d6)</Form.Text></Col>
+                <Col>Mods<Form.Text>(Ex. 4 for 3d6+4)</Form.Text></Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Form.Control id="manaDiceType" type="number" min="0" />
+                </Col>
+                <Col>
+                  <Form.Control id="manaNumOfDice" type="number" min="1" />
+                </Col>
+                <Col>
+                  <Form.Control id="manaMods" type="number" min="0" />
+                </Col>
+              </Row>
             </Form.Label>
-            <Form.Label as={Col} htmlFor="greaterPotValue">
-              Greater mana potion restore value:
-              <Form.Control id="greaterPotValue" type="number" min="0" />
+            <Form.Label as={Col}>
+              Greater mana potions:
+              <Row>
+                <Col>Dice<Form.Text>(Ex. 6 for d6)</Form.Text></Col>
+                <Col># of Dice<Form.Text>(Ex. 3 for 3d6)</Form.Text></Col>
+                <Col>Mods<Form.Text>(Ex. 4 for 3d6+4)</Form.Text></Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Form.Control id="greaterDiceType" type="number" min="0" />
+                </Col>
+                <Col>
+                  <Form.Control id="greaterNumOfDice" type="number" min="1" />
+                </Col>
+                <Col>
+                  <Form.Control id="greaterMods" type="number" min="0" />
+                </Col>
+              </Row>
             </Form.Label>
           </Form.Group>
           <Row>Spell costs:</Row>
