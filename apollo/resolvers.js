@@ -50,6 +50,7 @@ const resolvers = {
           camp.create[keys[i]] = data[keys[i]];
         }
       }
+      console.log(camp);
       return prisma.campaigns.upsert(camp);
     },
     async deleteCharacter(_parent, args) {

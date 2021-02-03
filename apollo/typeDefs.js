@@ -27,8 +27,12 @@ const typeDefs = gql`
     upsertCampaign(
       id: ID,
       name: String,
-      mana_pot_value: Int,
-      greater_pot_value: Int,
+      mana_dice_type: Int,
+      mana_num_of_dice: Int,
+      mana_mods: Int,
+      greater_dice_type: Int,
+      greater_num_of_dice: Int,
+      greater_mods: Int,
       cantrip_cost: Int,
       spell_1_cost: Int,
       spell_2_cost: Int,
@@ -58,8 +62,12 @@ const typeDefs = gql`
   type Campaign {
     id: ID!
     name: String!
-    mana_pot_value: Int
-    greater_pot_value: Int
+    mana_dice_type: Int
+    mana_num_of_dice: Int
+    mana_mods: Int
+    greater_dice_type: Int
+    greater_num_of_dice: Int
+    greater_mods: Int
     cantrip_cost: Int
     spell_1_cost: Int
     spell_2_cost: Int
