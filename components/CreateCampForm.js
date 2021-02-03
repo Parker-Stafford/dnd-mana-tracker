@@ -7,8 +7,6 @@ import { WhiteButton } from '../styles/index.styles';
 
 export default function CreateCampForm({
   name,
-  manaPotValue,
-  greaterPotValue,
   cantripCost,
   spell1Cost,
   spell2Cost,
@@ -24,8 +22,12 @@ export default function CreateCampForm({
 }) {
   const values = {
     name: name || '',
-    manaPotValue: manaPotValue || '',
-    greaterPotValue: greaterPotValue || '',
+    manaDiceType: 0,
+    manaNumOfDice: 0,
+    manaMods: 0,
+    greaterDiceType: 0,
+    greaterNumOfDice: 0,
+    greaterMods: 0,
     cantripCost: cantripCost || 0,
     spell1Cost: spell1Cost || 0,
     spell2Cost: spell2Cost || 0,
