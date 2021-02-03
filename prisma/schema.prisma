@@ -78,21 +78,25 @@ model verification_requests {
 }
 
 model campaigns {
-  id                Int          @id @default(autoincrement())
-  name              String
-  mana_pot_value    Int?
-  greater_pot_value Int?
-  cantrip_cost      Int?
-  spell_1_cost      Int?
-  spell_2_cost      Int?
-  spell_3_cost      Int?
-  spell_4_cost      Int?
-  spell_5_cost      Int?
-  spell_6_cost      Int?
-  spell_7_cost      Int?
-  spell_8_cost      Int?
-  spell_9_cost      Int?
-  user_id           Int
-  users             users        @relation(fields: [user_id], references: [id])
-  characters        characters[]
+  id                  Int          @id @default(autoincrement())
+  name                String
+  mana_dice_type      Int?
+  mana_num_of_dice    Int?
+  mana_mods           Int?
+  greater_dice_type   Int?
+  greater_num_of_dice Int?
+  greater_mods        Int?
+  cantrip_cost        Int?
+  spell_1_cost        Int?
+  spell_2_cost        Int?
+  spell_3_cost        Int?
+  spell_4_cost        Int?
+  spell_5_cost        Int?
+  spell_6_cost        Int?
+  spell_7_cost        Int?
+  spell_8_cost        Int?
+  spell_9_cost        Int?
+  user_id             Int
+  users               users        @relation(fields: [user_id], references: [id])
+  characters          characters[]
 }
