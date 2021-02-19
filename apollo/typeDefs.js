@@ -19,8 +19,32 @@ const typeDefs = gql`
       user_id: Int,
       id: ID
     ): Character!
+
     deleteCharacter(id: ID!): Character
+
     deleteUser(id: ID!): User
+
+    upsertCampaign(
+      id: ID,
+      name: String,
+      mana_dice_type: Int,
+      mana_num_of_dice: Int,
+      mana_mods: Int,
+      greater_dice_type: Int,
+      greater_num_of_dice: Int,
+      greater_mods: Int,
+      cantrip_cost: Int,
+      spell_1_cost: Int,
+      spell_2_cost: Int,
+      spell_3_cost: Int,
+      spell_4_cost: Int,
+      spell_5_cost: Int,
+      spell_6_cost: Int,
+      spell_7_cost: Int,
+      spell_8_cost: Int,
+      spell_9_cost: Int,
+      user_id: Int,
+    ): Campaign!
   }
 
   type Character {
@@ -32,6 +56,28 @@ const typeDefs = gql`
     level: Int
     mana_pots: Int
     greater_pots: Int
+    user_id: Int!
+  }
+
+  type Campaign {
+    id: ID!
+    name: String!
+    mana_dice_type: Int
+    mana_num_of_dice: Int
+    mana_mods: Int
+    greater_dice_type: Int
+    greater_num_of_dice: Int
+    greater_mods: Int
+    cantrip_cost: Int
+    spell_1_cost: Int
+    spell_2_cost: Int
+    spell_3_cost: Int
+    spell_4_cost: Int
+    spell_5_cost: Int
+    spell_6_cost: Int
+    spell_7_cost: Int
+    spell_8_cost: Int
+    spell_9_cost: Int
     user_id: Int!
   }
 
