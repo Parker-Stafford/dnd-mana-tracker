@@ -59,39 +59,6 @@ CREATE TABLE characters
     level INTEGER NOT NULL,
     mana_pots INTEGER,
     greater_pots INTEGER,
-    campaign_id INTEGER,
-    user_id INTEGER NOT NULL,
-    PRIMARY KEY (id),
-    CONSTRAINT fk_user
-      FOREIGN KEY(user_id)
-        REFERENCES users(id)
-        ON DELETE CASCADE,
-    CONSTRAINT fk_campaign
-      FOREIGN KEY(campaign_id)
-        REFERENCES campaigns(id)
-        ON DELETE CASCADE
-  );
-
-CREATE TABLE campaigns
-  (
-    id SERIAL,
-    name VARCHAR(100) NOT NULL,
-    mana_Dice_Type INTEGER,
-    mana_Num_Of_Dice INTEGER,
-    mana_Mods INTEGER,
-    greater_Dice_Type INTEGER,
-    greater_Num_Of_Dice INTEGER,
-    greater_Mods INTEGER,
-    cantrip_cost INTEGER,
-    spell_1_cost  INTEGER,
-    spell_2_cost  INTEGER,
-    spell_3_cost  INTEGER,
-    spell_4_cost  INTEGER,
-    spell_5_cost  INTEGER,
-    spell_6_cost  INTEGER,
-    spell_7_cost  INTEGER,
-    spell_8_cost  INTEGER,
-    spell_9_cost  INTEGER,
     user_id INTEGER NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT fk_user
@@ -99,7 +66,6 @@ CREATE TABLE campaigns
         REFERENCES users(id)
         ON DELETE CASCADE
   );
-
 /* Potential option later */
 /*
 CREATE TABLE potions

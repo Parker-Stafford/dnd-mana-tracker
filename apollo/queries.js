@@ -53,31 +53,6 @@ export const UPSERT_CHARACTER = gql`
   }
 `;
 
-export const UPSERT_CAMPAIGN = gql`
-  mutation UpsertCampaign( $id: ID, $name: String, $manaDiceType: Int, $manaNumOfDice: Int, $manaMods: Int, $greaterDiceType: Int, $greaterNumOfDice: Int, $greaterMods: Int, $cantripCost: Int, $spell1Cost: Int, $spell2Cost: Int, $spell3Cost: Int, $spell4Cost: Int, $spell5Cost: Int, $spell6Cost: Int, $spell7Cost: Int, $spell8Cost: Int, $spell9Cost: Int, $user_id: Int) {
-    upsertCampaign(id: $id, name: $name, mana_dice_type: $manaDiceType, mana_num_of_dice: $manaNumOfDice, mana_mods: $manaMods, greater_dice_type: $greaterDiceType, greater_num_of_dice: $greaterNumOfDice, greater_mods: $greaterMods, cantrip_cost: $cantripCost, spell_1_cost: $spell1Cost, spell_2_cost: $spell2Cost, spell_3_cost: $spell3Cost, spell_4_cost: $spell4Cost, spell_5_cost: $spell5Cost, spell_6_cost: $spell6Cost, spell_7_cost: $spell7Cost, spell_8_cost: $spell8Cost, spell_9_cost: $spell9Cost, user_id: $user_id) {
-      id
-      name
-      mana_dice_type
-      mana_num_of_dice
-      mana_mods
-      greater_dice_type
-      greater_num_of_dice
-      greater_mods
-      cantrip_cost
-      spell_1_cost
-      spell_2_cost
-      spell_3_cost
-      spell_4_cost
-      spell_5_cost
-      spell_6_cost
-      spell_7_cost
-      spell_8_cost
-      spell_9_cost
-    }
-  }
-`;
-
 export const DELETE_CHARACTER = gql`
   mutation DeleteCharacter($id: ID!) {
     deleteCharacter(id: $id) {
