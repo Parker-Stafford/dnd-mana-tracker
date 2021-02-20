@@ -33,7 +33,8 @@ export function initializeApollo(initialState = null) {
 
   // If you fetch data on the client hydrate inital state
   if (initialState) {
-    _apolloClient.cache.restore(initialState);
+    const existingCache = _apolloClient.extract();
+    _apolloClient.cache.restore({ ...existingCache, ...initialState });
   }
 
   // If on server (using ssg or ssr) create a new client
