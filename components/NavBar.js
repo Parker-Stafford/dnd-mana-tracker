@@ -30,12 +30,6 @@ export default function NavBar({ session }) {
           <Nav.Link href="/create-character">
             New Character
           </Nav.Link>
-          <Nav.Link href="/campaigns">
-            My Campaigns
-          </Nav.Link>
-          <Nav.Link href="/create-campaign">
-            New Campaign
-          </Nav.Link>
         </Nav>
         <WhiteDropDown>
           <WhiteToggle>

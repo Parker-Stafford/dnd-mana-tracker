@@ -36,23 +36,6 @@ const resolvers = {
       }
       return prisma.characters.upsert(char);
     },
-    upsertCampaign(_parent, data) {
-      const userId = data.user_id;
-      const id = +data.id || 0;
-      const camp = {
-        where: { id },
-        update: {},
-        create: { users: { connect: { id: userId } } },
-      };
-      const keys = Object.keys(data);
-      for (let i = 0; i < keys.length; i++) {
-        if (keys[i] !== 'user_id' && keys[i] !== 'id') {
-          camp.create[keys[i]] = data[keys[i]];
-        }
-      }
-      console.log(camp);
-      return prisma.campaigns.upsert(camp);
-    },
     async deleteCharacter(_parent, args) {
       const id = +args.id;
       return prisma.characters.delete({

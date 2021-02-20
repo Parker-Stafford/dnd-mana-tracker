@@ -17,7 +17,3 @@ export const FooterIcon = styled.i`
   margin: 0 10px;
   color: white !important;
 `;
-
-export const Policy = styled.a`
-  margin: 0 10px;
-`;
